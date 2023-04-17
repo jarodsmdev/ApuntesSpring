@@ -17,29 +17,109 @@
   </head>
   <body for="html-export">
     <div class="mume markdown-preview">
-    <html><head></head><body><div><h1 class="mume-header" id="index">Index</h1>
-
-      <main>
-        <ul>
-            <li><a href="../APUNTES_SPRING/PAGES/3.CoreSpring.html">Core Spring</a></li>
-            <li><a href="../APUNTES_SPRING/PAGES/4.RquisitosSpring.html">Requisitos Spring</a></li>
-            <li><a href="../APUNTES_SPRING/PAGES/6.InversionOfControl.html">Inversion of Control I</a></li>
-            <li><a href="../APUNTES_SPRING/PAGES/8.IoC_2.html">Inversion of Control II</a></li>
-            <li><a href="../APUNTES_SPRING/PAGES/8.IoC_2.html">Inversion of Control II</a></li>
-            <li><a href="../APUNTES_SPRING/PAGES/9.DependencyInjection.html">Inyección de Dependencias I</a></li>
-            <li><a href="../APUNTES_SPRING/PAGES/10.DependencyInjectionII.html">Inyección de Dependencias II</a></li>
-            <li><a href="../APUNTES_SPRING/PAGES/11.DependencyInjectionIII.html">Inyección de Dependencias III</a></li>
-            <li><a href="../APUNTES_SPRING/PAGES/12.DependencyInjectionIV.html">Inyección de Dependencias IV</a></li>
-            <li><a href="../APUNTES_SPRING/PAGES/13.SingletonPrototype.html">Singleton y Prototype</a></li>
-            <li><a href="../APUNTES_SPRING/PAGES/14.BeanLifeCycle.html">Ciclo de vida de los Beans</a></li>
-
-        </ul>
-    </main>
-    <footer>
-        
-    </footer>
+    <html><head></head><body><div><h1 class="mume-header" id="java-annotation-iv">Java Annotation IV</h1>
 
 <hr>
+<h2 class="mume-header" id="inyecci%C3%B3n-de-dependencias-usando-un-m%C3%A9todo-setter">Inyecci&#xF3;n de Dependencias usando un M&#xE9;todo Setter</h2>
+
+<h3 class="mume-header" id="clase-comercialexperimentado">Clase ComercialExperimentado</h3>
+
+<pre class="language-text">package com.jarodSmith.pruebaAnnotations;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class ComercialExperimentado implements IEmpleados {
+    //CREACI&#xD3;N DE ATRIBUTO DE TIPO ICreacionInformeFinanciero
+    private ICreacionInformeFinanciero nuevoInforme;
+
+    public ComercialExperimentado() {}
+
+    //INYECCI&#xD3;N DE DEPENDENCIAS CON SETTER
+    @Autowired
+    public void setNuevoInforme(ICreacionInformeFinanciero nuevoInforme) {
+        this.nuevoInforme = nuevoInforme;
+    }
+
+    @Override
+    public String getTareas() {
+        return &quot;[ComercialExperimentado] Vender, vender, vender m&#xE1;s!.&quot;;
+    }
+
+    @Override
+    public String getInforme() {
+        //return &quot;[ComercialExperimentado] Informe generado por el comercial.&quot;;
+        return nuevoInforme.getInformeFinanciero();
+    }
+
+}
+</pre>
+<h2 class="mume-header" id="inyecci%C3%B3n-de-dependencias-usando-un-m%C3%A9todo-setter-1">Inyecci&#xF3;n de Dependencias usando un M&#xE9;todo Setter</h2>
+
+<h3 class="mume-header" id="clase-comercialexperimentado-1">Clase ComercialExperimentado</h3>
+
+<pre class="language-text">package com.jarodSmith.pruebaAnnotations;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class ComercialExperimentado implements IEmpleados {
+    //CREACI&#xD3;N DE ATRIBUTO DE TIPO ICreacionInformeFinanciero
+    private ICreacionInformeFinanciero nuevoInforme;
+
+    public ComercialExperimentado() {}
+
+    //INYECCI&#xD3;N DE DEPENDENCIAS CON UN M&#xC9;TODO GEN&#xC9;RICO
+    @Autowired
+    public void usandoUnMetodoCualquiera(ICreacionInformeFinanciero nuevoInforme) {
+        this.nuevoInforme = nuevoInforme;
+    }
+
+    @Override
+    public String getTareas() {
+        return &quot;[ComercialExperimentado] Vender, vender, vender m&#xE1;s!.&quot;;
+    }
+
+    @Override
+    public String getInforme() {
+        //return &quot;[ComercialExperimentado] Informe generado por el comercial.&quot;;
+        return nuevoInforme.getInformeFinanciero();
+    }
+}
+</pre>
+<h2 class="mume-header" id="inyecci%C3%B3n-de-dependencias-usando-un-campo-de-clase">Inyecci&#xF3;n de Dependencias usando un Campo de Clase</h2>
+
+<h3 class="mume-header" id="clase-comercialexperimentado-2">Clase ComercialExperimentado</h3>
+
+<pre class="language-text">package com.jarodSmith.pruebaAnnotations;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class ComercialExperimentado implements IEmpleados {
+    //CREACI&#xD3;N DE ATRIBUTO DE TIPO ICreacionInformeFinanciero
+    //INYECCI&#xD3;N DE DEPENDENCIAS USANDO UN CAMPO DE CLASE
+    @Autowired
+    private ICreacionInformeFinanciero nuevoInforme;
+
+    public ComercialExperimentado() {}
+
+    @Override
+    public String getTareas() {
+        return &quot;[ComercialExperimentado] Vender, vender, vender m&#xE1;s!.&quot;;
+    }
+
+    @Override
+    public String getInforme() {
+        //return &quot;[ComercialExperimentado] Informe generado por el comercial.&quot;;
+        return nuevoInforme.getInformeFinanciero();
+    }
+
+}
+</pre>
 </div></body></html>
     </div>
   </body>

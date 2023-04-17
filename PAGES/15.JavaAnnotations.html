@@ -17,29 +17,32 @@
   </head>
   <body for="html-export">
     <div class="mume markdown-preview">
-    <html><head></head><body><div><h1 class="mume-header" id="index">Index</h1>
-
-      <main>
-        <ul>
-            <li><a href="../APUNTES_SPRING/PAGES/3.CoreSpring.html">Core Spring</a></li>
-            <li><a href="../APUNTES_SPRING/PAGES/4.RquisitosSpring.html">Requisitos Spring</a></li>
-            <li><a href="../APUNTES_SPRING/PAGES/6.InversionOfControl.html">Inversion of Control I</a></li>
-            <li><a href="../APUNTES_SPRING/PAGES/8.IoC_2.html">Inversion of Control II</a></li>
-            <li><a href="../APUNTES_SPRING/PAGES/8.IoC_2.html">Inversion of Control II</a></li>
-            <li><a href="../APUNTES_SPRING/PAGES/9.DependencyInjection.html">Inyección de Dependencias I</a></li>
-            <li><a href="../APUNTES_SPRING/PAGES/10.DependencyInjectionII.html">Inyección de Dependencias II</a></li>
-            <li><a href="../APUNTES_SPRING/PAGES/11.DependencyInjectionIII.html">Inyección de Dependencias III</a></li>
-            <li><a href="../APUNTES_SPRING/PAGES/12.DependencyInjectionIV.html">Inyección de Dependencias IV</a></li>
-            <li><a href="../APUNTES_SPRING/PAGES/13.SingletonPrototype.html">Singleton y Prototype</a></li>
-            <li><a href="../APUNTES_SPRING/PAGES/14.BeanLifeCycle.html">Ciclo de vida de los Beans</a></li>
-
-        </ul>
-    </main>
-    <footer>
-        
-    </footer>
+    <html><head></head><body><div><h1 class="mume-header" id="java-annotations-i" ebook-toc-level-1 heading="Java Annotations I">Java Annotations I</h1>
 
 <hr>
+<p>Son anotaciones &quot;etiquetas&quot; que se a&#xF1;aden a nuestras clases, m&#xE9;todos, campos, variables, etc en un programa Java.</p>
+<p>Sirven para a&#xF1;adir metadados a nuestros programas (clases) de Java.</p>
+<p>&#xBF;Qu&#xE9; son los metadatos?<br>
+Son un conjunto de datos que describen el contenido y/o proposito de un objeto</p>
+<p>Poder describir la naturaleza de un objeto (metadatos) con annotations nos permite utlizarlas como sustitulo de los archivos XML.</p>
+<p>Las annotations son procesadas en tiempo de compilaci&#xF3;n o tambi&#xE9;n en tiempo de ejecuci&#xF3;n.</p>
+<h2 class="mume-header" id="c%C3%B3mo-funcionan-las-annotations-en-spring" ebook-toc-level-2 heading="C&amp;#xF3;mo funcionan las annotations en Spring">C&#xF3;mo funcionan las annotations en Spring</h2>
+
+<p>Spring escanea el c&#xF3;digo de todas nuestras clases en busca de annotations (Recursividad), siempre y cuando se prepare el archivo XML para que escanee nuestro c&#xF3;digo.</p>
+<p>Cuando encuentra una annotation, registra el bean de forma autom&#xE1;tica en el contenedor.</p>
+<p>Nos da las siguientes ventajas:</p>
+<ul>
+<li>Mayor facilidad a la hora de configurar los beans</li>
+<li>Simplifica enormemente el c&#xF3;digo del archivo de configuraci&#xF3;n XML</li>
+<li>Especialmente &#xFA;til cuando debemos configurar cientos de beans en un programa</li>
+</ul>
+<h2 class="mume-header" id="pasos-a-seguir-para-utilizar-annotations" ebook-toc-level-2 heading="Pasos a seguir para utilizar annotations">Pasos a seguir para utilizar annotations</h2>
+
+<ul>
+<li>Preparar el XML para que Spring escanee nuestro c&#xF3;digo (clases)</li>
+<li>Agregar annotations a nuestras clases de Java</li>
+<li>Pedir en Bean al contenedor</li>
+</ul>
 </div></body></html>
     </div>
   </body>

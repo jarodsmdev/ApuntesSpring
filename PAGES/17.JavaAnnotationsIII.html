@@ -17,29 +17,123 @@
   </head>
   <body for="html-export">
     <div class="mume markdown-preview">
-    <html><head></head><body><div><h1 class="mume-header" id="index">Index</h1>
-
-      <main>
-        <ul>
-            <li><a href="../APUNTES_SPRING/PAGES/3.CoreSpring.html">Core Spring</a></li>
-            <li><a href="../APUNTES_SPRING/PAGES/4.RquisitosSpring.html">Requisitos Spring</a></li>
-            <li><a href="../APUNTES_SPRING/PAGES/6.InversionOfControl.html">Inversion of Control I</a></li>
-            <li><a href="../APUNTES_SPRING/PAGES/8.IoC_2.html">Inversion of Control II</a></li>
-            <li><a href="../APUNTES_SPRING/PAGES/8.IoC_2.html">Inversion of Control II</a></li>
-            <li><a href="../APUNTES_SPRING/PAGES/9.DependencyInjection.html">Inyección de Dependencias I</a></li>
-            <li><a href="../APUNTES_SPRING/PAGES/10.DependencyInjectionII.html">Inyección de Dependencias II</a></li>
-            <li><a href="../APUNTES_SPRING/PAGES/11.DependencyInjectionIII.html">Inyección de Dependencias III</a></li>
-            <li><a href="../APUNTES_SPRING/PAGES/12.DependencyInjectionIV.html">Inyección de Dependencias IV</a></li>
-            <li><a href="../APUNTES_SPRING/PAGES/13.SingletonPrototype.html">Singleton y Prototype</a></li>
-            <li><a href="../APUNTES_SPRING/PAGES/14.BeanLifeCycle.html">Ciclo de vida de los Beans</a></li>
-
-        </ul>
-    </main>
-    <footer>
-        
-    </footer>
+    <html><head></head><body><div><h1 class="mume-header" id="java-annotations-iii-autowired">Java Annotations III. Autowired</h1>
 
 <hr>
+<p>Java annotations Autowired, inyecci&#xF3;n de dependencias utilizando un constructor</p>
+<p>Para utilizar esto deberemos seguir 3 pasos:</p>
+<p>1.- Crear clase + interfaz a inyectar (dependencia)<br>
+2.- Crear un constructor para inyecci&#xF3;n en la clase que lo solicite<br>
+3.- Configurar la dependencia con @Autowired</p>
+<blockquote>
+<p>Importante la anotaci&#xF3;n @Autowired es obligatoria siempre y cuando la clase tiene m&#xE1;s de un constructor.</p>
+</blockquote>
+<blockquote>
+<p>Desde la versi&#xF3;n 4.3 de Spring se puede prescindir de ella mientras la clase s&#xF3;lo posea un constructor.</p>
+</blockquote>
+<h2 class="mume-header" id="archivo-configuraci%C3%B3n-applicationcontextxml">Archivo configuraci&#xF3;n applicationContext.xml</h2>
+
+<pre class="language-text">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+    xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+    xsi:schemaLocation=&quot;
+    http://www.springframework.org/schema/beans   
+    http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context-3.1.xsd
+        &quot;&gt;
+
+    &lt;!-- CONFIGURAR QU&#xC9; PACKAGE DEBE ESCANEAR EN BUSCA DE LAS ANNOTATIONS  --&gt;
+    &lt;context:component-scan base-package=&quot;com.jarodSmith.pruebaAnnotations&quot;&gt;&lt;/context:component-scan&gt;
+
+&lt;/beans&gt;
+</pre>
+<h2 class="mume-header" id="interfaz-icreacioninformefinanciero">Interfaz ICreacionInformeFinanciero</h2>
+
+<pre class="language-text">package com.jarodSmith.pruebaAnnotations;
+
+public interface ICreacionInformeFinanciero {
+    public String getInformeFinanciero();
+}
+</pre>
+<h2 class="mume-header" id="clase-informefinancierotrimi">Clase InformeFinancieroTrimI</h2>
+
+<pre class="language-text">package com.jarodSmith.pruebaAnnotations;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class InformeFinancieroTrimI implements ICreacionInformeFinanciero {
+
+    @Override
+    public String getInformeFinanciero() {
+        return &quot;Presentaci&#xF3;n de informe financiero Trimestre I.&quot;;
+    }
+}
+</pre>
+<h2 class="mume-header" id="clase-comercialexperimentado">Clase ComercialExperimentado</h2>
+
+<pre class="language-text">package com.jarodSmith.pruebaAnnotations;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class ComercialExperimentado implements IEmpleados {
+    //CREACI&#xD3;N DE ATRIBUTO DE TIPO ICreacionInformeFinanciero
+    private ICreacionInformeFinanciero nuevoInforme;
+
+    //CREACI&#xD3;N DE CONSTRUCTOR
+    @Autowired
+    public ComercialExperimentado(ICreacionInformeFinanciero nuevoInforme) {
+        this.nuevoInforme = nuevoInforme;
+    }
+
+    @Override
+    public String getTareas() {
+        return &quot;[ComercialExperimentado] Vender, vender, vender m&#xE1;s!.&quot;;
+    }
+
+    @Override
+    public String getInforme() {
+        //return &quot;[ComercialExperimentado] Informe generado por el comercial.&quot;;
+
+        return nuevoInforme.getInformeFinanciero();
+    }
+}
+</pre>
+<h2 class="mume-header" id="clase-principal">Clase Principal</h2>
+
+<pre class="language-text">package com.jarodSmith.pruebaAnnotations;
+
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class UsoAnnotations {
+
+    public static void main(String[] args) {
+        //CARGAR XML DE CONFIGURACI&#xD3;N
+        ClassPathXmlApplicationContext contexto = new ClassPathXmlApplicationContext(&quot;applicationContext.xml&quot;);
+
+        //PEDIR UN BEAN AL CONTENEDOR
+        IEmpleados Antonio = contexto.getBean(&quot;comercialExperimentado&quot;, IEmpleados.class);
+
+        //USAR EL BEAN
+        System.out.println(Antonio.getInforme());
+        System.out.println(Antonio.getTareas());
+
+        //CERRAR EL CONTEXTO
+        contexto.close();
+
+        /*OUTPUT
+        Presentaci&#xF3;n de informe financiero Trimestre I.
+        [ComercialExperimentado] Vender, vender, vender m&#xE1;s!.
+        */
+    }
+}
+</pre>
+<h2 class="mume-header" id></h2>
+
 </div></body></html>
     </div>
   </body>
