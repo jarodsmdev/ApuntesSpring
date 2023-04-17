@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>IoC II</title>
+    <title>no title</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
@@ -17,90 +17,100 @@
   </head>
   <body for="html-export">
     <div class="mume markdown-preview">
-    <html><head></head><body><div><h1 class="mume-header" id="inversion-of-control-ioc-ii" ebook-toc-level-1 heading="Inversion Of Control (IoC) II">Inversion Of Control (IoC) II</h1>
+    <html><head></head><body><div><h1 class="mume-header" id="java-annotations-v-qualifier">Java Annotations V: Qualifier</h1>
 
 <hr>
-<p>Debemos crear el archivo de configuraci&#xF3;n para que Spring nos proporcione el objeto que necesita el programa y para eso se puede crear de 3 formas:</p>
-<ul>
-<li>Creando un archvo de configuraci&#xF3;n de tipo XML</li>
-<li>Usando Java Source Code</li>
-<li>Usando Java Annotations</li>
-</ul>
-<h2 class="mume-header" id="creando-el-archivo-de-configuraci%C3%B3n-xml" ebook-toc-level-2 heading="Creando el archivo de Configuraci&amp;#xF3;n XML">Creando el archivo de Configuraci&#xF3;n XML</h2>
+<p>Esta annotations sirve para espeficificar un Bean Id cuando sea necesario.</p>
+<h3 class="mume-header" id="clase-comercialexperimentado">Clase ComercialExperimentado</h3>
 
-<pre class="language-text">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
-    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-    xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
-    xsi:schemaLocation=&quot;
-    http://www.springframework.org/schema/beans   
-    http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
-    http://www.springframework.org/schema/context 
-    http://www.springframework.org/schema/context/spring-context-3.1.xsd
-&quot;&gt;
+<pre class="language-text">package com.jarodSmith.pruebaAnnotations;
 
-&lt;/beans&gt;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+
+@Component
+public class ComercialExperimentado implements IEmpleados {
+    //CREACI&#xD3;N DE ATRIBUTO DE TIPO ICreacionInformeFinanciero
+    //INYECCI&#xD3;N DE DEPENDENCIAS USANDO UN CAMPO DE CLASE
+    @Autowired
+    @Qualifier(&quot;informeFinancieroTrimII&quot;)
+    private ICreacionInformeFinanciero nuevoInforme;
+
+    public ComercialExperimentado() {}
+
+    @Override
+    public String getTareas() {
+        return &quot;[ComercialExperimentado] Vender, vender, vender m&#xE1;s!.&quot;;
+    }
+
+    @Override
+    public String getInforme() {
+        //return &quot;[ComercialExperimentado] Informe generado por el comercial.&quot;;
+        return nuevoInforme.getInformeFinanciero();
+    }
+}
 </pre>
-<p>Este c&#xF3;digo debe estar en nuestro proyecto y se debe agregar de la siguiente forma &quot;src &gt; new &gt; file &gt; applicationContext.xml&quot; por convenci&#xF3;n este es el nombre del archivo</p>
-<p>Una vez que tengamos el archivo creado debemos seguir 4 pasos para utilizarlo</p>
-<p>1.- Cargar archivo XML recien creado, para crear el contexto</p>
-<pre class="language-text">ClassPathXmlApplicationContext contexto = new ClassPathXmlApplicationContext(&quot;applicationContext.xml&quot;);
-</pre>
-<p>2.- Crear el bean en el archivo para pedirlo</p>
-<pre class="language-text">Empleados Juan = contexto.getBean(&quot;miEmpleado&quot;, Empleados.class);
-</pre>
-<blockquote>
-<p>En donde el M&#xE9;todo getBean(&lt;bean configurado en applicationContext.xml&gt;, &lt;Interfaz&gt;.class);</p>
-</blockquote>
-<p>3.- Utilizar el bean</p>
-<pre class="language-text">System.out.println(Juan.getTareas());
-</pre>
-<p>4.- Cerrar el contexto</p>
-<pre class="language-text">contexto.close();
-</pre>
-<h2 class="mume-header" id="clase-principal" ebook-toc-level-2 heading="Clase Principal">Clase Principal</h2>
+<h3 class="mume-header" id="clase-informefinancierotrimi">Clase InformeFinancieroTrimI</h3>
 
-<p>Entonces la clase principal quedar&#xED;a de la siguiente manera:</p>
-<pre class="language-text">package com.JarodSmith.IoC;
+<pre class="language-text">package com.jarodSmith.pruebaAnnotations;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
 
-public class UsoEmpleados {
+@Component
+public class InformeFinancieroTrimI implements ICreacionInformeFinanciero {
 
-    public static void main(String[] args) {
-    
-        //1. CARGAR ARCHIVO XML (CREAR CONTEXTO)
-        ClassPathXmlApplicationContext contexto = new ClassPathXmlApplicationContext(&quot;applicationContext.xml&quot;);
-
-        //2. PEDIR EL BEAN (&quot;ALIAS&quot;, INTERFAZ)
-        Empleados Juan = contexto.getBean(&quot;miEmpleado&quot;, Empleados.class);
-
-        //3. UTILIZAR EL BEAN
-        System.out.println(Juan.getTareas());
-
-        //4. CERRAR XML (CONTEXTO)
-        contexto.close();
+    @Override
+    public String getInformeFinanciero() {
+        return &quot;Presentaci&#xF3;n de informe financiero Trimestre I.&quot;;
     }
 
 }
 </pre>
-<h2 class="mume-header" id="applicationcontextxml" ebook-toc-level-2 heading="ApplicationContext.xml">ApplicationContext.xml</h2>
+<h3 class="mume-header" id="clase-informefinancierotrimii">Clase InformeFinancieroTrimII</h3>
 
-<p>Este archivo quedar&#xED;a de la siguiente manera:</p>
-<pre class="language-text">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
-    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-    xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
-    xsi:schemaLocation=&quot;
-    http://www.springframework.org/schema/beans   
-    http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
-    http://www.springframework.org/schema/context 
-    http://www.springframework.org/schema/context/spring-context-3.1.xsd
-        &quot;&gt;
+<pre class="language-text">package com.jarodSmith.pruebaAnnotations;
 
-&lt;bean id=&quot;miEmpleado&quot; class=&quot;com.JarodSmith.IoC.JefeEmpleado&quot;&gt;&lt;/bean&gt;
+import org.springframework.stereotype.Component;
 
-&lt;/beans&gt;
+@Component
+public class InformeFinancieroTrimII implements ICreacionInformeFinanciero {
+
+    @Override
+    public String getInformeFinanciero() {
+        return &quot;Presentaci&#xF3;n de informe catastr&#xF3;fico del trimestre II&quot;;
+    }
+
+}
+</pre>
+<h3 class="mume-header" id="clase-principal">Clase Principal</h3>
+
+<pre class="language-text">package com.jarodSmith.pruebaAnnotations;
+
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class UsoAnnotations {
+
+public static void main(String[] args) {
+        //CARGAR XML DE CONFIGURACI&#xD3;N
+        ClassPathXmlApplicationContext contexto = new ClassPathXmlApplicationContext(&quot;applicationContext.xml&quot;);
+
+        //PEDIR UN BEAN AL CONTENEDOR
+        IEmpleados Antonio = contexto.getBean(&quot;comercialExperimentado&quot;, IEmpleados.class);
+
+        //USAR EL BEAN
+        System.out.println(Antonio.getInforme());
+        System.out.println(Antonio.getTareas());
+
+        //CERRAR EL CONTEXTO
+        contexto.close();
+
+        /*OUTPUT
+        Presentaci&#xF3;n de informe catastr&#xF3;fico del trimestre II
+        [ComercialExperimentado] Vender, vender, vender m&#xE1;s!.
+        */
+    }
+}
 </pre>
 </div></body></html>
     </div>
