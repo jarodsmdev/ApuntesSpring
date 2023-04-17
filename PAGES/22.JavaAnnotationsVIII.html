@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Apuntes Spring</title>
+    <title>no title</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
@@ -15,39 +15,100 @@
     </style>
     
   </head>
-  <hr>
   <body for="html-export">
     <div class="mume markdown-preview">
-    <html><head></head><body><div><h1 class="mume-header" id="index">Index</h1>
+    <html><head></head><body><div><h1 class="mume-header" id="java-annotations-postconstruct-y-predestroy">Java Annotations: @PostConstruct y @PreDestroy</h1>
 
-      <main>
-        <ul>
-            <li><a href="./PAGES/3.CoreSpring.html">Core Spring</a></li>
-            <li><a href="./PAGES/4.RquisitosSpring.html">Requisitos Spring</a></li>
-            <li><a href="./PAGES/6.InversionOfControl.html">Inversion of Control I</a></li>
-            <li><a href="./PAGES/8.IoC_2.html">Inversion of Control II</a></li>
-            <li><a href="./PAGES/8.IoC_2.html">Inversion of Control II</a></li>
-            <li><a href="./PAGES/9.DependencyInjection.html">Inyección de Dependencias I</a></li>
-            <li><a href="./PAGES/10.DependencyInjectionII.html">Inyección de Dependencias II</a></li>
-            <li><a href="./PAGES/11.DependencyInjectionIII.html">Inyección de Dependencias III</a></li>
-            <li><a href="./PAGES/12.DependencyInjectionIV.html">Inyección de Dependencias IV</a></li>
-            <li><a href="./PAGES/13.SingletonPrototype.html">Singleton y Prototype</a></li>
-            <li><a href="./PAGES/14.BeanLifeCycle.html">Ciclo de vida de los Beans</a></li>
-            <li><a href="./PAGES/15.JavaAnnotations.html">Java Annotations I</a></li>
-            <li><a href="./PAGES/16.JavaAnnotationsII.html">Java Annotations II</a></li>
-            <li><a href="./PAGES/17.JavaAnnotationsIII.html">Java Annotations III</a></li>
-            <li><a href="./PAGES/19.JavaAnnotationsIV.html">Java Annotations IV</a></li>
-            <li><a href="./PAGES/20.JavaAnnotationsV.html">Java Annotations V: Qualifier</a></li>
-            <li><a href="./PAGES/21.JavaAnnotationVII.html">Java Annotations: Scope</a></li>
-            <li><a href="./PAGES/22.JavaAnnotationsVIII.html">Java Annotations: @PostConstruct y @PreDestroy</a></li>
+<hr>
+<p>En el ciclo de vida de los beans vimos que existen m&#xE9;todos que se activan antes de iniciar y despues de haber sido destruidos los beans, con Java Annotations tambien podemos hacerlo, usaremos @PostConstruct en el metodo propio que queremos ejecutar c&#xF3;digo antes de que est&#xE9; listo el bean para uso y usaremos @PreDestroy para ejecutar c&#xF3;digo de un m&#xE9;todo despues de que el contenedor de Spring se haya apagado para liberar recursos.</p>
+<p>A partir de Java 9 estas anotaciones fueron suprimidas, puede descargar el jar en este enlace <a href="https://jar-download.com/artifacts/javax.annotation/javax.annotation-api/1.3.2/source-code">https://jar-download.com/artifacts/javax.annotation/javax.annotation-api/1.3.2/source-code</a></p>
+<p>Importante: Estos m&#xE9;todos pueden tener cualquier modificador de Acceso, pueden devolver cualquier tipo aunque siempre se van a ver en libros como &quot;void&quot;, No deben recibir ning&#xFA;n tipo de argumento, y deben ser siempre bajo el patron singleton</p>
+<h2 class="mume-header" id="clase-comercialexperimentado">Clase ComercialExperimentado</h2>
 
-        </ul>
-    </main>
-    <footer>
-        
-    </footer>
+<pre class="language-text">package com.jarodSmith.pruebaAnnotations;
 
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+
+@Component
+public class ComercialExperimentado implements IEmpleados {
+    //CREACI&#xD3;N DE ATRIBUTO DE TIPO ICreacionInformeFinanciero
+    //INYECCI&#xD3;N DE DEPENDENCIAS USANDO UN CAMPO DE CLASE
+    @Autowired
+    @Qualifier(&quot;informeFinancieroTrimII&quot;)
+    private ICreacionInformeFinanciero nuevoInforme;
+
+    //EJECUCI&#xD3;N DE C&#xD3;DIGO DESPUES DE CREACION DEL BEAN
+    @PostConstruct
+    public void ejecutaDespuesCreacion() {
+        System.out.println(&quot;Ejecutado tras creaci&#xF3;n de Bean&quot;);
+    }
+
+    //EJECUCI&#xD3;N DE C&#xD3;DIGO DESPU&#xC9;S DE APAGADO EL CONTENEDOR SPRING
+    @PreDestroy
+    public void ejecutaAntesDestruccion() {
+        System.out.println(&quot;Ejecutando antes de la destrucci&#xF3;n&quot;);
+    }
+
+    public ComercialExperimentado() {}
+
+    @Override
+    public String getTareas() {
+        return &quot;[ComercialExperimentado] Vender, vender, vender m&#xE1;s!.&quot;;
+    }   
+    
+    @Override
+    public String getInforme() {
+        //return &quot;[ComercialExperimentado] Informe generado por el comercial.&quot;;
+        return nuevoInforme.getInformeFinanciero();
+    }
+
+}
+</pre>
+<h2 class="mume-header" id="clase-principal">Clase principal</h2>
+
+<pre class="language-text">package com.jarodSmith.pruebaAnnotations;
+
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class UsoAnnotations2 {
+
+    public static void main(String[] args) {
+        //CARGAR EL XML DE CONFIGURACION
+        ClassPathXmlApplicationContext contexto = new ClassPathXmlApplicationContext(&quot;applicationContext.xml&quot;);
+
+        //PEDIR 2 BEANS AL CONTENEDOR
+        IEmpleados Antonio = contexto.getBean(&quot;comercialExperimentado&quot;, IEmpleados.class);
+        IEmpleados Lucia = contexto.getBean(&quot;comercialExperimentado&quot;, IEmpleados.class);
+
+        //VERFIFICAR SIN APUNTAN AL MISMO OBJETO EN MEMORIA
+        if(Antonio == Lucia) {
+            System.out.println(&quot;Apuntan al mismo lugar en memoria&quot;);
+            System.out.println(Antonio + &quot;\n&quot; + Lucia);
+        }else
+        {
+            System.out.println(&quot;No apuntan al mismo lugar en memoria&quot;);
+            System.out.println(Antonio + &quot;\n&quot; + Lucia);
+        }
+
+        //CERRAR EL CONTEXTO
+        contexto.close();
+
+        /*OUTPUT TERMINAL
+        Ejecutado tras creaci&#xF3;n de Bean
+        Apuntan al mismo lugar en memoria
+        com.jarodSmith.pruebaAnnotations.ComercialExperimentado@4e5ed836
+        com.jarodSmith.pruebaAnnotations.ComercialExperimentado@4e5ed836
+        Ejecutando antes de la destrucci&#xF3;n
+        */
+    }
+}
+</pre>
 </div></body></html>
     </div>
   </body>
