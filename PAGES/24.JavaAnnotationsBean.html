@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Apuntes Spring</title>
+    <title>@Bean</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
@@ -15,41 +15,115 @@
     </style>
     
   </head>
-  <hr>
   <body for="html-export">
     <div class="mume markdown-preview">
-    <html><head></head><body><div><h1 class="mume-header" id="index">Index</h1>
+    <html><head></head><body><div><h1 class="mume-header" id="java-annotations-bean" ebook-toc-level-1 heading="Java Annotations: @Bean">Java Annotations: @Bean</h1>
 
-      <main>
-        <ul>
-            <li><a href="./PAGES/3.CoreSpring.html">Core Spring</a></li>
-            <li><a href="./PAGES/4.RquisitosSpring.html">Requisitos Spring</a></li>
-            <li><a href="./PAGES/6.InversionOfControl.html">Inversion of Control I</a></li>
-            <li><a href="./PAGES/8.IoC_2.html">Inversion of Control II</a></li>
-            <li><a href="./PAGES/8.IoC_2.html">Inversion of Control II</a></li>
-            <li><a href="./PAGES/9.DependencyInjection.html">Inyección de Dependencias I</a></li>
-            <li><a href="./PAGES/10.DependencyInjectionII.html">Inyección de Dependencias II</a></li>
-            <li><a href="./PAGES/11.DependencyInjectionIII.html">Inyección de Dependencias III</a></li>
-            <li><a href="./PAGES/12.DependencyInjectionIV.html">Inyección de Dependencias IV</a></li>
-            <li><a href="./PAGES/13.SingletonPrototype.html">Singleton y Prototype</a></li>
-            <li><a href="./PAGES/14.BeanLifeCycle.html">Ciclo de vida de los Beans</a></li>
-            <li><a href="./PAGES/15.JavaAnnotations.html">Java Annotations I</a></li>
-            <li><a href="./PAGES/16.JavaAnnotationsII.html">Java Annotations II</a></li>
-            <li><a href="./PAGES/17.JavaAnnotationsIII.html">Java Annotations III</a></li>
-            <li><a href="./PAGES/19.JavaAnnotationsIV.html">Java Annotations IV</a></li>
-            <li><a href="./PAGES/20.JavaAnnotationsV.html">Java Annotations V: Qualifier</a></li>
-            <li><a href="./PAGES/21.JavaAnnotationVII.html">Java Annotations: Scope</a></li>
-            <li><a href="./PAGES/22.JavaAnnotationsVIII.html">Java Annotations: @PostConstruct y @PreDestroy</a></li>
-            <li><a href="./PAGES/23.JavaAnnotations.Configuration.html">Java Annotations: @Configuration y @ComponentScan</a></li>
-            <li><a href="./PAGES/24.JavaAnnotationsBean.html">Java Annotations: @Bean</a></li>
+<hr>
+<p>La annotation @Bean nos permite pedir bean al contenedor de Spring con c&#xF3;digo Java prescindiendo del archivo XML</p>
+<ul>
+<li>Crearemos una clase llamada DirectorFinanciero que implemente de la interfaz IEmpleados</li>
+<li>Crearemos una clase llamada InformeFinancieroDeptoCompras que implemente de ICreacionInformeFinanciero</li>
+<li>Agregaremos annotations @Bean en la clase EmpleadosConfig para declarar los bean mediante c&#xF3;digo java y que Spring pueda detectarlos y ser usados por la clase principal</li>
+<li>Preparar a la clase principal para el uso de los Beans</li>
+</ul>
+<h2 class="mume-header" id="clase-directorfinanciero" ebook-toc-level-2 heading="Clase DirectorFinanciero">Clase DirectorFinanciero</h2>
 
-        </ul>
-    </main>
-    <footer>
-        
-    </footer>
+<pre class="language-text">package com.jarodSmith.pruebaAnnotations;
 
+public class DirectorFinanciero implements IEmpleados {
 
+    //CREACION DE CAMPO DE CLASE
+    private ICreacionInformeFinanciero informeFinanciero;
+
+    //CONSTRUCTOR
+    public DirectorFinanciero(ICreacionInformeFinanciero informeFinanciero) {
+        this.informeFinanciero = informeFinanciero;
+    }
+
+    @Override
+    public String getTareas() {
+        return &quot;[Director Financiero] Gesti&#xF3;n y direcci&#xF3;n de las operaciones financieras de la empresa&quot;;
+    }
+
+    @Override
+    public String getInforme() {
+        return informeFinanciero.getInformeFinanciero();
+    }
+
+}
+</pre>
+<h2 class="mume-header" id="clase-informefinancierodeptocompras" ebook-toc-level-2 heading="Clase InformeFinancieroDeptoCompras">Clase InformeFinancieroDeptoCompras</h2>
+
+<pre class="language-text">package com.jarodSmith.pruebaAnnotations;
+
+public class InformeFinancieroDeptoCompras implements ICreacionInformeFinanciero {
+
+    @Override
+    public String getInformeFinanciero() {
+
+        return &quot;Informe financiero del Departamento de compras a&#xF1;o 2023&quot;;
+    }
+
+}
+</pre>
+<h2 class="mume-header" id="clase-emmpleadosconfig" ebook-toc-level-2 heading="Clase EmmpleadosConfig">Clase EmmpleadosConfig</h2>
+
+<pre class="language-text">package com.jarodSmith.pruebaAnnotations;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@ComponentScan(&quot;com.jarodSmith.pruebaAnnotations&quot;)
+public class EmpleadosConfig {
+
+    //DEFINIR EL BEAN PARA InformeFinancieroDeptoCompras
+    @Bean
+    public ICreacionInformeFinanciero informeFinancieroDeptoCompras() { //ID del Bean
+        return new InformeFinancieroDeptoCompras();
+    }
+
+    //DEFINIR EL BEAN PARA DirectorFinaniero e inyectar dependencias
+    @Bean
+    public IEmpleados directorFinanciero() {
+        return new DirectorFinanciero(informeFinancieroDeptoCompras()); //Inyecci&#xF3;n del Bean
+    }
+}
+</pre>
+<h2 class="mume-header" id="clase-principal-usoannotations2" ebook-toc-level-2 heading="Clase principal UsoAnnotations2">Clase principal UsoAnnotations2</h2>
+
+<pre class="language-text">package com.jarodSmith.pruebaAnnotations;
+
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+public class UsoAnnotations2 {
+
+    public static void main(String[] args) {
+
+        //LEER EL CLASS DE CONFIGURACI&#xD3;N
+        AnnotationConfigApplicationContext contexto = new AnnotationConfigApplicationContext(EmpleadosConfig.class);
+
+        //PEDIR BEAN AL CONTENEDOR
+        IEmpleados empleado = contexto.getBean(&quot;directorFinanciero&quot;, IEmpleados.class);
+
+        System.out.println(empleado.getTareas());
+
+        System.out.println(empleado.getInforme());
+
+        //CERRAR EL CONTEXTO
+        contexto.close();
+
+        /* OUTPUT TERMINAL:
+        Ejecutado tras creaci&#xF3;n de Bean
+        [Director Financiero] Gesti&#xF3;n y direcci&#xF3;n de las operaciones financieras de la empresa
+        Informe financiero del Departamento de compras a&#xF1;o 2023
+        Ejecutando antes de la destrucci&#xF3;n
+        */
+    }
+}
+</pre>
 </div></body></html>
     </div>
   </body>
