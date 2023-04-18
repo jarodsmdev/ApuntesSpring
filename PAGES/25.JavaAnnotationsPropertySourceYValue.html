@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Apuntes Spring</title>
+    <title>no title</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
@@ -15,43 +15,129 @@
     </style>
     
   </head>
-  <hr>
   <body for="html-export">
     <div class="mume markdown-preview">
-    <html><head></head><body><div><h1 class="mume-header" id="index">Index</h1>
+    <html><head></head><body><div><h1 class="mume-header" id="java-annotation-propertysource-y-value" ebook-toc-level-1 heading="Java Annotation: @PropertySource y @Value">Java Annotation: @PropertySource y @Value</h1>
 
-      <main>
-        <ul>
-            <li><a href="./PAGES/3.CoreSpring.html">Core Spring</a></li>
-            <li><a href="./PAGES/4.RquisitosSpring.html">Requisitos Spring</a></li>
-            <li><a href="./PAGES/6.InversionOfControl.html">Inversion of Control I</a></li>
-            <li><a href="./PAGES/8.IoC_2.html">Inversion of Control II</a></li>
-            <li><a href="./PAGES/8.IoC_2.html">Inversion of Control II</a></li>
-            <li><a href="./PAGES/9.DependencyInjection.html">Inyección de Dependencias I</a></li>
-            <li><a href="./PAGES/10.DependencyInjectionII.html">Inyección de Dependencias II</a></li>
-            <li><a href="./PAGES/11.DependencyInjectionIII.html">Inyección de Dependencias III</a></li>
-            <li><a href="./PAGES/12.DependencyInjectionIV.html">Inyección de Dependencias IV</a></li>
-            <li><a href="./PAGES/13.SingletonPrototype.html">Singleton y Prototype</a></li>
-            <li><a href="./PAGES/14.BeanLifeCycle.html">Ciclo de vida de los Beans</a></li>
-            <li><a href="./PAGES/15.JavaAnnotations.html">Java Annotations I</a></li>
-            <li><a href="./PAGES/16.JavaAnnotationsII.html">Java Annotations II</a></li>
-            <li><a href="./PAGES/17.JavaAnnotationsIII.html">Java Annotations III</a></li>
-            <li><a href="./PAGES/19.JavaAnnotationsIV.html">Java Annotations IV</a></li>
-            <li><a href="./PAGES/20.JavaAnnotationsV.html">Java Annotations V: Qualifier</a></li>
-            <li><a href="./PAGES/21.JavaAnnotationVII.html">Java Annotations: Scope</a></li>
-            <li><a href="./PAGES/22.JavaAnnotationsVIII.html">Java Annotations: @PostConstruct y @PreDestroy</a></li>
-            <li><a href="./PAGES/23.JavaAnnotations.Configuration.html">Java Annotations: @Configuration y @ComponentScan</a></li>
-            <li><a href="./PAGES/24.JavaAnnotationsBean.html">Java Annotations: @Bean</a></li>
-            <li><a href="./PAGES/25.JavaAnnotationsPropertySourceYValue.html">Java Annotations: @PropertySource y @Value</a></li>
-            
+<hr>
+<p>En esta sesi&#xF3;n veremos 2 annotations:</p>
+<ul>
+<li>@PropertySource: Que permite especificar la ruta al archivo Externo de propiedades.</li>
+<li>@Value: Permite inyectar el valor de las propiedades desde archivo externo.</li>
+</ul>
+<p>Para poner en practica esto debemos realizar:</p>
+<ul>
+<li>Crear un archivo de texto plano dentro de la carpeta &quot;src&quot;</li>
+<li>Tener configurado los beans en la clase EmpleadosConfig.java agregando la annotation @PropertySource en el constructor de la clase.</li>
+<li>Agregar campos de clase que vamos a utilizar y que hacen referencia a los datos del archivo externo (email y nombreEmpresa) y usar las annotations @Value</li>
+<li>Crear los setters de turno de los campos de clase reci&#xE9;n creados</li>
+<li>Pedir y usar el bean en la clase principal</li>
+</ul>
+<h2 class="mume-header" id="creando-archivo-de-texto-plano-datosempresapropiedades" ebook-toc-level-2 heading="Creando archivo de texto plano &amp;quot;datosEmpresa.propiedades&amp;quot;">Creando archivo de texto plano &quot;datosEmpresa.propiedades&quot;</h2>
 
-        </ul>
-    </main>
-    <footer>
-        
-    </footer>
+<pre class="language-text">email=EquipoDirectivo@jarodSmith.com
+nombreEmpresa=Jarod Smith Inc.
+</pre>
+<h2 class="mume-header" id="clase-empleadosconfig" ebook-toc-level-2 heading="Clase EmpleadosConfig">Clase EmpleadosConfig</h2>
 
+<pre class="language-text">package com.jarodSmith.pruebaAnnotations;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+
+@Configuration
+@ComponentScan(&quot;com.jarodSmith.pruebaAnnotations&quot;)
+@PropertySource(&quot;classpath:datosEmpresa.propiedades&quot;)
+public class EmpleadosConfig {
+
+    //DEFINIR EL BEAN PARA InformeFinancieroDeptoCompras
+    @Bean
+    public ICreacionInformeFinanciero informeFinancieroDeptoCompras() { //ID del Bean
+        return new InformeFinancieroDeptoCompras();
+    }
+
+    //DEFINIR EL BEAN PARA DirectorFinaniero e inyectar dependencias
+    @Bean
+    public IEmpleados directorFinanciero() {
+        return new DirectorFinanciero(informeFinancieroDeptoCompras());
+    }
+}
+</pre>
+<h2 class="mume-header" id="clase-directorfinanciero" ebook-toc-level-2 heading="Clase DirectorFinanciero">Clase DirectorFinanciero</h2>
+
+<pre class="language-text">package com.jarodSmith.pruebaAnnotations;
+
+import org.springframework.beans.factory.annotation.Value;
+
+public class DirectorFinanciero implements IEmpleados {
+
+    //CREACION DE CAMPO DE CLASE
+    private ICreacionInformeFinanciero informeFinanciero;
+
+    @Value(&quot;${email}&quot;)
+    private String email;
+
+    @Value(&quot;${nombreEmpresa}&quot;)
+    private String nombreEmpresa;
+
+    //CONSTRUCTOR
+    public DirectorFinanciero(ICreacionInformeFinanciero informeFinanciero) {
+        this.informeFinanciero = informeFinanciero;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getNombreEmpresa() {
+        return nombreEmpresa;
+    }
+
+    @Override
+    public String getTareas() {
+        return &quot;[Director Financiero] Gesti&#xF3;n y direcci&#xF3;n de las operaciones financieras de la empresa&quot;;
+    }
+
+    @Override
+    public String getInforme() {
+        return informeFinanciero.getInformeFinanciero();
+    }
+}
+</pre>
+<h2 class="mume-header" id="clase-principal-usoannotations2" ebook-toc-level-2 heading="Clase Principal UsoAnnotations2">Clase Principal UsoAnnotations2</h2>
+
+<pre class="language-text">package com.jarodSmith.pruebaAnnotations;
+
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+public class UsoAnnotations2 {
+
+    public static void main(String[] args) {
+
+        //LEER EL CLASS DE CONFIGURACI&#xD3;N
+        AnnotationConfigApplicationContext contexto = new AnnotationConfigApplicationContext(EmpleadosConfig.class);
+
+        //PEDIR BEAN AL CONTENEDOR
+        DirectorFinanciero empleado = contexto.getBean(&quot;directorFinanciero&quot;, DirectorFinanciero.class);
+
+        //UTILIZAR EL BEAN
+        System.out.println(&quot;Email del director: &quot; + empleado.getEmail());
+        System.out.println(&quot;Nombre de la Empresa: &quot; + empleado.getNombreEmpresa());
+
+        //CERRAR EL CONTEXTO
+        contexto.close();
+
+        /* OUTPUT TERMINAL:
+        Ejecutado tras creaci&#xF3;n de Bean
+        Email del director: EquipoDirectivo@jarodSmith.com
+        Nombre de la Empresa: Jarod Smith Inc.
+        Ejecutando antes de la destrucci&#xF3;n
+        */
+    }
+}
+</pre>
 </div></body></html>
     </div>
   </body>
