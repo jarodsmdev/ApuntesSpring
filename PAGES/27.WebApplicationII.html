@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>DI IV</title>
+    <title>no title</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
@@ -17,96 +17,115 @@
   </head>
   <body for="html-export">
     <div class="mume markdown-preview">
-    <html><head></head><body><div><h1 class="mume-header" id="inyecci%C3%B3n-de-dependencias-iv">Inyecci&#xF3;n de Dependencias IV</h1>
+    <html><head></head><body><div><h1 class="mume-header" id="web-application" ebook-toc-level-1 heading="Web Application">Web Application</h1>
 
 <hr>
-<h2 class="mume-header" id="inyecci%C3%B3n-de-campos-desde-archivo-externo">Inyecci&#xF3;n de campos desde archivo Externo</h2>
-
-<p>Crear archivo</p>
-<p>src -&gt; New -&gt; File -&gt; &quot;datosEmpresa.propiedades&quot;</p>
-<pre class="language-text">email=&quot;equipoDirectivo@jarodsmith.com&quot;
-nombreEmpresa=&quot;Jarod Smith Inc.&quot;
-</pre>
-<h3 class="mume-header" id="applicationcontextxml">applicationContext.xml</h3>
+<p>Crearemos un proyecto web din&#xE1;mico y deberemos configurarlo:</p>
+<ul>
+<li>En la ruta src/main/webapp/WEB-INF crearemos una carpeta llamada &quot;lib&quot; donde a&#xF1;adiremos los Spring Jar Files</li>
+<li>Dentro de la carpeta WEB-INF crearemos otra carpeta la cual llamaremos &quot;vista&quot; donde a&#xF1;adiremos &quot;JSP&quot; deseados</li>
+<li>Ademas necesitaremos 2 archivos xml adicionales que deber&#xE1;n estar en la siguiente ruta: src/main/webapp</li>
+<li>Crearemos un package de nombre &quot;com.JarodSmith.spring.mvc&quot; para que coincida con el dado en el archivo spring_mvc_servlet.xml, y en su interior agregaremos la clase Controlador</li>
+</ul>
+<h2 class="mume-header" id="archivo-spring_mvc_servletxml" ebook-toc-level-2 heading="archivo spring_mvc_servlet.xml">archivo spring_mvc_servlet.xml</h2>
 
 <pre class="language-text">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
-    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; 
     xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+    xmlns:mvc=&quot;http://www.springframework.org/schema/mvc&quot;
     xsi:schemaLocation=&quot;
-    http://www.springframework.org/schema/beans   
-    http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
-    http://www.springframework.org/schema/context 
-    http://www.springframework.org/schema/context/spring-context-3.1.xsd
-        &quot;&gt;
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd&quot;&gt;
 
-   &lt;!-- INYECCI&#xD3;N DE CAMPO DESDE ARCHIVO EXTERNO --&gt;
-   &lt;context:property-placeholder location=&quot;classpath:datosEmpresa.propiedades&quot; /&gt;   
+    &lt;!--  paquete a escanear en busca de componentes --&gt;
+    &lt;context:component-scan base-package=&quot;com.JarodSmith.spring.mvc&quot; /&gt;
 
+    &lt;mvc:annotation-driven/&gt;
 
-    &lt;!-- CREACION DE LA DEPENDENCIA --&gt;     
-    &lt;bean id=&quot;miInforme&quot; class=&quot;com.JarodSmith.IoC.Informe&quot;&gt;&lt;/bean&gt; 
-
-    &lt;!-- BEAN QUE GENERA LA INYECCION CON CONSTRUCTOR --&gt;
-    &lt;bean id=&quot;miDirectorEmpleado&quot; class=&quot;com.JarodSmith.IoC.DirectorEmpleado&quot;&gt;
-        &lt;!-- CONFIGURAR EL USO DE LA DEPENDENCIA --&gt;
-        &lt;constructor-arg ref=&quot;miInforme&quot;&gt;&lt;/constructor-arg&gt;
-
-        &lt;!-- INYECCION DE CAMPOS --&gt;
-        &lt;property name=&quot;email&quot; value=&quot;${email}&quot;&gt;&lt;/property&gt;
-        &lt;property name=&quot;nombreEmpresa&quot; value=&quot;${nombreEmpresa}&quot;&gt;&lt;/property&gt;
-    &lt;/bean&gt;
-
-    &lt;!-- BEAN QUE GENERA LA INYECCION CON UN M&#xC9;TODO SETTER --&gt;
-    &lt;bean id=&quot;miSecretarioEmpleado&quot; class=&quot;com.JarodSmith.IoC.SecretarioEmpleado&quot;&gt;
-        &lt;!-- QUITAR EL PREFIJO SET y la primera letra minuscula del setter (Ej: setInformeNuevo) --&gt;
-        &lt;property name=&quot;informeNuevo&quot; ref=&quot;miInforme&quot;&gt;&lt;/property&gt;
-
-        &lt;!-- INYECCI&#xD3;N DE CAMPOS --&gt;
-        &lt;property name=&quot;email&quot; value=&quot;secretaria@jarodsmith.com&quot;&gt;&lt;/property&gt;
-        &lt;property name=&quot;nombreEmpresa&quot; value=&quot;Jarod Smith Inc.&quot;&gt;&lt;/property&gt;
+    &lt;!-- Configuracion del view resolver--&gt;
+    &lt;bean
+        class=&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;&gt;
+        &lt;property name=&quot;prefix&quot; value=&quot;/WEB-INF/vista/&quot; /&gt;
+        &lt;property name=&quot;suffix&quot; value=&quot;.jsp&quot; /&gt;
     &lt;/bean&gt;
 
 &lt;/beans&gt;
 </pre>
-<h3 class="mume-header" id="clase-principal">Clase Principal</h3>
+<h2 class="mume-header" id="archivo-webxml" ebook-toc-level-2 heading="archivo web.xml">archivo web.xml</h2>
 
-<pre class="language-text">package com.JarodSmith.IoC;
+<pre class="language-text">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;web-app xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+    xmlns=&quot;http://xmlns.jcp.org/xml/ns/javaee&quot;
+    xsi:schemaLocation=&quot;http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd&quot;
+    id=&quot;WebApp_ID&quot; version=&quot;3.1&quot;&gt;
 
+    &lt;display-name&gt;mvc ejemplo&lt;/display-name&gt;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+    &lt;absolute-ordering /&gt;
 
-public class UsoEmpleados {
+    &lt;!-- Configuracion del dispatcher servlet --&gt;
+    &lt;servlet&gt;
+        &lt;servlet-name&gt;dispatcher&lt;/servlet-name&gt;
+        &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+            &lt;param-value&gt;/WEB-INF/spring_mvc_servlet.xml&lt;/param-value&gt;
+        &lt;/init-param&gt;
+        &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+    &lt;/servlet&gt;
 
-    public static void main(String[] args) {
-    
-        //1. CARGAR ARCHIVO XML (CREAR CONTEXTO)
-        ClassPathXmlApplicationContext contexto = new ClassPathXmlApplicationContext(&quot;applicationContext.xml&quot;);
+    &lt;!-- Ubicacion URL del servlet --&gt;
+    &lt;servlet-mapping&gt;
+        &lt;servlet-name&gt;dispatcher&lt;/servlet-name&gt;
+        &lt;url-pattern&gt;/&lt;/url-pattern&gt;
+    &lt;/servlet-mapping&gt;
 
-        //2. PEDIR EL BEAN (&quot;ALIAS&quot;, INTERFAZ)
-        SecretarioEmpleado Juan = contexto.getBean(&quot;miSecretarioEmpleado&quot;, SecretarioEmpleado.class);
-        DirectorEmpleado Pablo = contexto.getBean(&quot;miDirectorEmpleado&quot;, DirectorEmpleado.class);
+&lt;/web-app&gt;
+</pre>
+<h2 class="mume-header" id="clase-controlador" ebook-toc-level-2 heading="Clase Controlador">Clase Controlador</h2>
 
-        //3. UTILIZAR EL BEAN
-        System.out.println(Juan.getTareas());
-        System.out.println(Pablo.getTareas());
+<pre class="language-text">package com.JarodSmith.spring.mvc;
 
-        //3.1 USO DE LA DEPENDENCIA
-        System.out.println(Juan.getInforme());
-        System.out.println(Pablo.getInforme());
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-        //3.2 USO DE INYECCION DE CAMPOS
-        System.out.println(&quot;Email: &quot; +  Juan.getEmail());
-        System.out.println(Juan.getNombreEmpresa());
+@Controller
+public class Controlador {
 
-        System.out.println(&quot;Email: &quot; +  Pablo.getEmail());
-        System.out.println(&quot;Empresa: &quot; + Pablo.getNombreEmpresa());
-
-        //4. CERRAR XML (CONTEXTO)
-        contexto.close();
+    @RequestMapping
+    public String muestraPagina() {
+        return &quot;paginaEjemplo&quot;; //Ac&#xE1; debe coincidir con el JSP
     }
-
 }
+</pre>
+<h2 class="mume-header" id="archivo-jsp" ebook-toc-level-2 heading="archivo JSP">archivo JSP</h2>
+
+<pre class="language-text">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
+    pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;UTF-8&quot;&gt;
+        &lt;title&gt;Primer JSP&lt;/title&gt;
+    &lt;/head&gt;
+        &lt;body&gt;
+            &lt;header&gt;
+                &lt;nav&gt;&lt;/nav&gt;
+            &lt;/header&gt;
+
+            &lt;main&gt;
+                &lt;h1&gt;Primer ejemplo de MVC con Spring&lt;/h1&gt;
+            &lt;/main&gt;
+        &lt;/body&gt;
+
+        &lt;footer&gt;
+        &lt;/footer&gt;
+&lt;/html&gt;
 </pre>
 </div></body></html>
     </div>
