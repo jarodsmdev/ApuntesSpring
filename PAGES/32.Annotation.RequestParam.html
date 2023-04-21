@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Apuntes Spring</title>
+    <title>@RequestParam</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
@@ -15,48 +15,57 @@
     </style>
     
   </head>
-  <hr>
   <body for="html-export">
     <div class="mume markdown-preview">
-    <html><head></head><body><div><h1 class="mume-header" id="index">Index</h1>
+    <html><head></head><body><div><h1 class="mume-header" id="annotation-requestparam">Annotation: @RequestParam</h1>
 
-      <main>
-        <ul>
-            <li><a href="./PAGES/3.CoreSpring.html">Core Spring</a></li>
-            <li><a href="./PAGES/4.RquisitosSpring.html">Requisitos Spring</a></li>
-            <li><a href="./PAGES/6.InversionOfControl.html">Inversion of Control I</a></li>
-            <li><a href="./PAGES/8.IoC_2.html">Inversion of Control II</a></li>
-            <li><a href="./PAGES/8.IoC_2.html">Inversion of Control II</a></li>
-            <li><a href="./PAGES/9.DependencyInjection.html">Inyección de Dependencias I</a></li>
-            <li><a href="./PAGES/10.DependencyInjectionII.html">Inyección de Dependencias II</a></li>
-            <li><a href="./PAGES/11.DependencyInjectionIII.html">Inyección de Dependencias III</a></li>
-            <li><a href="./PAGES/12.DependencyInjectionIV.html">Inyección de Dependencias IV</a></li>
-            <li><a href="./PAGES/13.SingletonPrototype.html">Singleton y Prototype</a></li>
-            <li><a href="./PAGES/14.BeanLifeCycle.html">Ciclo de vida de los Beans</a></li>
-            <li><a href="./PAGES/15.JavaAnnotations.html">Java Annotations I</a></li>
-            <li><a href="./PAGES/16.JavaAnnotationsII.html">Java Annotations II</a></li>
-            <li><a href="./PAGES/17.JavaAnnotationsIII.html">Java Annotations III</a></li>
-            <li><a href="./PAGES/19.JavaAnnotationsIV.html">Java Annotations IV</a></li>
-            <li><a href="./PAGES/20.JavaAnnotationsV.html">Java Annotations V: Qualifier</a></li>
-            <li><a href="./PAGES/21.JavaAnnotationVII.html">Java Annotations: Scope</a></li>
-            <li><a href="./PAGES/22.JavaAnnotationsVIII.html">Java Annotations: @PostConstruct y @PreDestroy</a></li>
-            <li><a href="./PAGES/23.JavaAnnotations.Configuration.html">Java Annotations: @Configuration y @ComponentScan</a></li>
-            <li><a href="./PAGES/24.JavaAnnotationsBean.html">Java Annotations: @Bean</a></li>
-            <li><a href="./PAGES/25.JavaAnnotationsPropertySourceYValue.html">Java Annotations: @PropertySource y @Value</a></li>
-            <li><a href="./PAGES/27.WebApplicationII.html">Aplicación Web dinámica: MVC</a></li>
-            <li><a href="./PAGES/28.WebApplicationIII.html">Aplicación Web dinámica: MVC II: Petición y Respuesta</a></li>
-            <li><a href="./PAGES/29.WebApplicationIV.html">Aplicación Web dinámica: MVC IV: Agregar datos al Modelo</a></li>
-            <li><a href="./PAGES/30.WebApplication.StaticFiles.html">Aplicación Web dinámica: MVC V: Static Files</a></li>
-            <li><a href="./PAGES/32.Annotation.RequestParam.html">Annotation: @RequestParam</a></li>
-            <li><a href="./PAGES/33.RequestMapping.ConflictoRutas.html">@RequestMapping: Conflicto de Rutas</a></li>
-            
-        </ul>
-    </main>
-    <footer>
-        
-    </footer>
+<hr>
+<p>Esta anotaci&#xF3;n nos facilita rescatar en un m&#xE9;todo par&#xE1;metros que hacemos con una petici&#xF3;n (request)</p>
+<p>Lo que haremos ser&#xE1; sustituir el primer par&#xE1;metro del m&#xE9;todo &quot;otroProcesoFormulario&quot; de la clase &quot;HolaAlumnosControlador&quot;, en espec&#xED;fico el par&#xE1;metro que hace referencia a la clase &quot;HttpServletRequest&quot; por la anotaci&#xF3;n <strong>@RequestParam()</strong> que recibe el &quot;name&quot; del input del JSP correspondiente.  Esto se conoce como &quot;binding request&quot;.</p>
+<p>Quedando el controlador de la siguiente manera:</p>
+<h2 class="mume-header" id="clase-holaalumnoscontrolador">Clase HolaAlumnosControlador</h2>
+
+<pre class="language-text">package com.JarodSmith.spring.mvc;
 
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@Controller
+public class HolaAlumnosControlador {
+
+    //M&#xC9;TODO PROPORCIONA EL FORMULARIO A LA VISTA
+    @RequestMapping(&quot;/muestraFormulario&quot;)
+    public String muestraFormulario() {
+        return &quot;HolaAlumnosFormulario&quot;;
+    }
+
+    //M&#xC9;TODO QUE PROCESE EL FORMULARIO Y RETORNE UNA RESPUESTA
+    @RequestMapping(&quot;/procesarFormulario&quot;)
+    public String procesarFormulario() {
+        return &quot;HolaAlumnosSpring&quot;;
+    }
+
+    //AGREGAR INFORMACION A NUESTRO MODELO
+    @RequestMapping(&quot;/procesarFormulario2&quot;)
+    public String otroProcesoFormulario(@RequestParam(&quot;nombreAlumno&quot;) String nombre, Model modelo) {
+
+        //AGREAR MAS TEXTO A CONTINUACION DEL NOMBRE QUE VIENE DE LA VISTA
+        nombre += &quot; es el mejor alumno&quot;;
+
+        //AGREGAR INFORMACION EXTRA
+        String mensajeFinal = &quot;&#xBF;Qui&#xE9;n es el mejor alumno? &quot; + nombre;
+
+        //AGREGAR DATOS AL MODELO
+        modelo.addAttribute(&quot;mensajeClaro&quot;, mensajeFinal);
+
+        //DEVOLVER LA VISTA
+        return &quot;HolaAlumnosSpring&quot;;
+    }
+}
+</pre>
 </div></body></html>
     </div>
   </body>

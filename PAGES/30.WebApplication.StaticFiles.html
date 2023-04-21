@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Apuntes Spring</title>
+    <title>Static Files</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
@@ -15,48 +15,162 @@
     </style>
     
   </head>
-  <hr>
   <body for="html-export">
     <div class="mume markdown-preview">
-    <html><head></head><body><div><h1 class="mume-header" id="index">Index</h1>
+    <html><head></head><body><div><h1 class="mume-header" id="web-application-static-files">Web Application: Static Files</h1>
 
-      <main>
-        <ul>
-            <li><a href="./PAGES/3.CoreSpring.html">Core Spring</a></li>
-            <li><a href="./PAGES/4.RquisitosSpring.html">Requisitos Spring</a></li>
-            <li><a href="./PAGES/6.InversionOfControl.html">Inversion of Control I</a></li>
-            <li><a href="./PAGES/8.IoC_2.html">Inversion of Control II</a></li>
-            <li><a href="./PAGES/8.IoC_2.html">Inversion of Control II</a></li>
-            <li><a href="./PAGES/9.DependencyInjection.html">Inyección de Dependencias I</a></li>
-            <li><a href="./PAGES/10.DependencyInjectionII.html">Inyección de Dependencias II</a></li>
-            <li><a href="./PAGES/11.DependencyInjectionIII.html">Inyección de Dependencias III</a></li>
-            <li><a href="./PAGES/12.DependencyInjectionIV.html">Inyección de Dependencias IV</a></li>
-            <li><a href="./PAGES/13.SingletonPrototype.html">Singleton y Prototype</a></li>
-            <li><a href="./PAGES/14.BeanLifeCycle.html">Ciclo de vida de los Beans</a></li>
-            <li><a href="./PAGES/15.JavaAnnotations.html">Java Annotations I</a></li>
-            <li><a href="./PAGES/16.JavaAnnotationsII.html">Java Annotations II</a></li>
-            <li><a href="./PAGES/17.JavaAnnotationsIII.html">Java Annotations III</a></li>
-            <li><a href="./PAGES/19.JavaAnnotationsIV.html">Java Annotations IV</a></li>
-            <li><a href="./PAGES/20.JavaAnnotationsV.html">Java Annotations V: Qualifier</a></li>
-            <li><a href="./PAGES/21.JavaAnnotationVII.html">Java Annotations: Scope</a></li>
-            <li><a href="./PAGES/22.JavaAnnotationsVIII.html">Java Annotations: @PostConstruct y @PreDestroy</a></li>
-            <li><a href="./PAGES/23.JavaAnnotations.Configuration.html">Java Annotations: @Configuration y @ComponentScan</a></li>
-            <li><a href="./PAGES/24.JavaAnnotationsBean.html">Java Annotations: @Bean</a></li>
-            <li><a href="./PAGES/25.JavaAnnotationsPropertySourceYValue.html">Java Annotations: @PropertySource y @Value</a></li>
-            <li><a href="./PAGES/27.WebApplicationII.html">Aplicación Web dinámica: MVC</a></li>
-            <li><a href="./PAGES/28.WebApplicationIII.html">Aplicación Web dinámica: MVC II: Petición y Respuesta</a></li>
-            <li><a href="./PAGES/29.WebApplicationIV.html">Aplicación Web dinámica: MVC IV: Agregar datos al Modelo</a></li>
-            <li><a href="./PAGES/30.WebApplication.StaticFiles.html">Aplicación Web dinámica: MVC V: Static Files</a></li>
-            <li><a href="./PAGES/32.Annotation.RequestParam.html">Annotation: @RequestParam</a></li>
-            <li><a href="./PAGES/33.RequestMapping.ConflictoRutas.html">@RequestMapping: Conflicto de Rutas</a></li>
-            
-        </ul>
-    </main>
-    <footer>
-        
-    </footer>
+<hr>
+<p>Aqu&#xED; explicaremos c&#xF3;mo a&#xF1;adir contenido est&#xE1;tico a nuestro proyecto.</p>
+<p>Crearemos una estructura de carpeta para esto, en la ruta &quot;src/main/webapp&quot; aqu&#xED; agregaremos una carpeta que puede tener cualquier nombre, por ahora la llamaremos &quot;recursos&quot; y dentro de esta crearemos otra &quot;imgs&quot; y es all&#xED; donde agregaremos todas la im&#xE1;genes que querramos.</p>
+<p>Luego debemos configurar nuestro archivo de configuracion de servets y agregaremos la siguiente etiqueta:</p>
+<pre class="language-text">&lt;mvc:resources location=&quot;/recursos/&quot; mapping=&quot;/recursos/**&quot;&gt;&lt;/mvc:resources&gt;
+</pre>
+<p>Quedando tal archivo de la siguiente manera:</p>
+<pre class="language-text">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; 
+    xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+    xmlns:mvc=&quot;http://www.springframework.org/schema/mvc&quot;
+    xsi:schemaLocation=&quot;
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd&quot;&gt;
 
+    &lt;!--  paquete a escanear en busca de componentes --&gt;
+    &lt;context:component-scan base-package=&quot;com.JarodSmith.spring.mvc&quot; /&gt;
 
+    &lt;mvc:annotation-driven/&gt;
+
+    &lt;!-- Configuracion del view resolver--&gt;
+    &lt;bean
+        class=&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;&gt;
+        &lt;property name=&quot;prefix&quot; value=&quot;/WEB-INF/vista/&quot; /&gt;
+        &lt;property name=&quot;suffix&quot; value=&quot;.jsp&quot; /&gt;
+    &lt;/bean&gt;
+
+    &lt;!-- Configuracion de archivos estaticos --&gt;
+    &lt;mvc:resources location=&quot;/recursos/&quot; mapping=&quot;/recursos/**&quot;&gt;&lt;/mvc:resources&gt;
+
+&lt;/beans&gt;
+</pre>
+<p>Adem&#xE1;s debemos configurar nuestro archivo web.xml y agregar las siguientes lineas:</p>
+<pre class="language-text">    &lt;!-- static files --&gt;
+    &lt;servlet-mapping&gt;
+        &lt;servlet-name&gt;default&lt;/servlet-name&gt;
+        &lt;url-pattern&gt;/recursos/*&lt;/url-pattern&gt;
+    &lt;/servlet-mapping&gt;
+</pre>
+<p>Lo que provocar&#xED;a que nuestro archivo web.xml quede de la siguiente manera:</p>
+<pre class="language-text">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;web-app xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+    xmlns=&quot;http://xmlns.jcp.org/xml/ns/javaee&quot;
+    xsi:schemaLocation=&quot;http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd&quot;
+    id=&quot;WebApp_ID&quot; version=&quot;3.1&quot;&gt;
+
+    &lt;display-name&gt;mvc ejemplo&lt;/display-name&gt;
+
+    &lt;absolute-ordering /&gt;
+
+    &lt;!-- Configuracion del dispatcher servlet --&gt;
+    &lt;servlet&gt;
+        &lt;servlet-name&gt;dispatcher&lt;/servlet-name&gt;
+        &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+            &lt;param-value&gt;/WEB-INF/spring_mvc_servlet.xml&lt;/param-value&gt;
+        &lt;/init-param&gt;
+        &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+    &lt;/servlet&gt;
+
+    &lt;!-- Ubicacion URL del servlet --&gt;
+    &lt;servlet-mapping&gt;
+        &lt;servlet-name&gt;dispatcher&lt;/servlet-name&gt;
+        &lt;url-pattern&gt;/&lt;/url-pattern&gt;
+    &lt;/servlet-mapping&gt;
+
+    &lt;!-- static files --&gt;
+    &lt;servlet-mapping&gt;
+        &lt;servlet-name&gt;default&lt;/servlet-name&gt;
+        &lt;url-pattern&gt;/recursos/*&lt;/url-pattern&gt;
+    &lt;/servlet-mapping&gt;
+
+&lt;/web-app&gt;
+</pre>
+<p>Vamos a agregar una im&#xE1;gen en el JSP &quot;HolaAlumnosSpring&quot;</p>
+<h2 class="mume-header" id="jsp-holaalumnosspring">JSP HolaAlumnosSpring</h2>
+
+<pre class="language-text">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
+    pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;Respuesta&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;header&gt;
+            &lt;nav&gt;&lt;/nav&gt;
+        &lt;/header&gt;
+
+        &lt;main&gt;
+            &lt;h1&gt;P&#xE1;gina de respuesta&lt;/h1&gt;
+            &lt;p&gt;Hola ${param.nombreAlumno}.  Bienvenido al curso de Spring.&lt;/p&gt;
+
+            &lt;h2&gt;Atenci&#xF3;n a todos.&lt;/h2&gt;
+
+            &lt;!-- RESCATAR INFORMACION DEL MODELO --&gt;
+            &lt;p&gt;${mensajeClaro}&lt;/p&gt;
+
+            &lt;!-- AGREGA ARCHIVOS EST&#xC1;TICOS (EN ESTE CASO UNA IM&#xC1;GEN) --&gt;
+            &lt;img alt=&quot;foto&quot; src=&quot;${pageContext.request.contextPath}/recursos/imgs/1.jpg&quot;&gt;
+        &lt;/main&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<h2 class="mume-header" id="agregando-un-hoja-de-estilos-css">Agregando un hoja de Estilos CSS</h2>
+
+<p>De la misma manera podemos agregar una hoja de estilos externa a los archivos est&#xE1;ticos</p>
+<p>crearemos un archivo css en la siguiente ruta &quot;src/main/webapp/recursos/css/estilos.css&quot;</p>
+<h3 class="mume-header" id="contenido-de-estiloscss">Contenido de estilos.css</h3>
+
+<pre class="language-text">body {
+    background-color: gray;
+}
+</pre>
+<h3 class="mume-header" id="jsp-holaalumnosspring-1">JSP HolaAlumnosSpring</h3>
+
+<pre class="language-text">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
+    pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;UTF-8&quot;&gt;
+        &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;${pageContext.request.contextPath}/recursos/css/estilos.css&quot;&gt;
+    &lt;title&gt;Respuesta&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;header&gt;
+            &lt;nav&gt;&lt;/nav&gt;
+        &lt;/header&gt;
+
+        &lt;main&gt;
+            &lt;h1&gt;P&#xE1;gina de respuesta&lt;/h1&gt;
+            &lt;p&gt;Hola ${param.nombreAlumno}.  Bienvenido al curso de Spring.&lt;/p&gt;
+
+            &lt;h2&gt;Atenci&#xF3;n a todos.&lt;/h2&gt;
+
+            &lt;!-- RESCATAR INFORMACION DEL MODELO --&gt;
+            &lt;p&gt;${mensajeClaro}&lt;/p&gt;
+
+            &lt;!-- AGREGA ARCHIVOS EST&#xC1;TICOS (EN ESTE CASO UNA IM&#xC1;GEN) --&gt;
+            &lt;img alt=&quot;foto&quot; src=&quot;${pageContext.request.contextPath}/recursos/imgs/1.jpg&quot;&gt;
+        &lt;/main&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</pre>
 </div></body></html>
     </div>
   </body>
