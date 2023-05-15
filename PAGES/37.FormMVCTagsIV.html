@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Apuntes Spring</title>
+    <title>Form MVC Tags IV</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
@@ -15,52 +15,247 @@
     </style>
     
   </head>
-  <hr>
   <body for="html-export">
     <div class="mume markdown-preview">
-    <html><head></head><body><div><h1 class="mume-header" id="index">Index</h1>
+    <html><head></head><body><div><h1 class="mume-header" id="form-mvc-tags-iv">Form MVC Tags IV</h1>
 
-      <main>
-        <ul>
-            <li><a href="./PAGES/3.CoreSpring.html">Core Spring</a></li>
-            <li><a href="./PAGES/4.RquisitosSpring.html">Requisitos Spring</a></li>
-            <li><a href="./PAGES/6.InversionOfControl.html">Inversion of Control I</a></li>
-            <li><a href="./PAGES/8.IoC_2.html">Inversion of Control II</a></li>
-            <li><a href="./PAGES/8.IoC_2.html">Inversion of Control II</a></li>
-            <li><a href="./PAGES/9.DependencyInjection.html">Inyección de Dependencias I</a></li>
-            <li><a href="./PAGES/10.DependencyInjectionII.html">Inyección de Dependencias II</a></li>
-            <li><a href="./PAGES/11.DependencyInjectionIII.html">Inyección de Dependencias III</a></li>
-            <li><a href="./PAGES/12.DependencyInjectionIV.html">Inyección de Dependencias IV</a></li>
-            <li><a href="./PAGES/13.SingletonPrototype.html">Singleton y Prototype</a></li>
-            <li><a href="./PAGES/14.BeanLifeCycle.html">Ciclo de vida de los Beans</a></li>
-            <li><a href="./PAGES/15.JavaAnnotations.html">Java Annotations I</a></li>
-            <li><a href="./PAGES/16.JavaAnnotationsII.html">Java Annotations II</a></li>
-            <li><a href="./PAGES/17.JavaAnnotationsIII.html">Java Annotations III</a></li>
-            <li><a href="./PAGES/19.JavaAnnotationsIV.html">Java Annotations IV</a></li>
-            <li><a href="./PAGES/20.JavaAnnotationsV.html">Java Annotations V: Qualifier</a></li>
-            <li><a href="./PAGES/21.JavaAnnotationVII.html">Java Annotations: Scope</a></li>
-            <li><a href="./PAGES/22.JavaAnnotationsVIII.html">Java Annotations: @PostConstruct y @PreDestroy</a></li>
-            <li><a href="./PAGES/23.JavaAnnotations.Configuration.html">Java Annotations: @Configuration y @ComponentScan</a></li>
-            <li><a href="./PAGES/24.JavaAnnotationsBean.html">Java Annotations: @Bean</a></li>
-            <li><a href="./PAGES/25.JavaAnnotationsPropertySourceYValue.html">Java Annotations: @PropertySource y @Value</a></li>
-            <li><a href="./PAGES/27.WebApplicationII.html">Aplicación Web dinámica: MVC</a></li>
-            <li><a href="./PAGES/28.WebApplicationIII.html">Aplicación Web dinámica: MVC II: Petición y Respuesta</a></li>
-            <li><a href="./PAGES/29.WebApplicationIV.html">Aplicación Web dinámica: MVC IV: Agregar datos al Modelo</a></li>
-            <li><a href="./PAGES/30.WebApplication.StaticFiles.html">Aplicación Web dinámica: MVC V: Static Files</a></li>
-            <li><a href="./PAGES/32.Annotation.RequestParam.html">Annotation: @RequestParam</a></li>
-            <li><a href="./PAGES/33.RequestMapping.ConflictoRutas.html">@RequestMapping: Conflicto de Rutas</a></li>
-            <li><a href="./PAGES/34.FormMVCTagsI.html">Form MVC Tags I</a></li>
-            <li><a href="./PAGES/35.FormMVCTagsII.html">Form MVC Tags II</a></li>
-            <li><a href="./PAGES/36.FormMVCTagsIII.html">Form MVC Tags III</a></li>
-            <li><a href="./PAGES/37.FormMVCTagsIV.html">Form MVC Tags IV</a></li>
-            
-        </ul>
-    </main>
-    <footer>
+<hr>
+<h2 class="mume-header" id="agregar-radiobuttons">Agregar radioButtons</h2>
+
+<p>Agregaremos una nueva propiedad en la clase Alumno.java</p>
+<pre class="language-text">package com.JarodSmith.spring.mvc;
+
+public class Alumno {
+
+    private String nombre;
+    private String apellido;
+    private String optativas;
+    private String ciudadEstudios;
+    
+    public String getNombre() {
+        return nombre;
+    }
+    
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    
+    public String getApellido() {
+        return apellido;
+    }
+    
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+    
+    public String getOptativas() {
+        return optativas;
+    }
+    
+    public void setOptativas(String optativa) {
+        this.optativas = optativa;
+    }
+
+    public String getCiudadEstudios() {
+        return ciudadEstudios;
+    }
+
+    public void setCiudadEstudios(String ciudadEstudios) {
+        this.ciudadEstudios = ciudadEstudios;
+    }
+</pre>
+<p>}</p>
+<h2 class="mume-header" id="modificar-vista-alumnoregistroformulariojsp">Modificar vista alumnoRegistroFormulario.jsp</h2>
+
+<pre class="language-text">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot; pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;%@ taglib prefix=&quot;form&quot; uri=&quot;http://www.springframework.org/tags/form&quot; %&gt; 
+
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;UTF-8&quot;&gt;
+        &lt;title&gt;FORM MVC TAGS&lt;/title&gt;
+    &lt;/head&gt;
+
+
+        &lt;h1&gt;Form MVC Tags&lt;/h1&gt;
         
-    </footer>
+        &lt;hr&gt;
+        &lt;h2&gt;Formulario de Registro&lt;/h2&gt;
+        
+        &lt;form:form action=&quot;procesarFormulario&quot; modelAttribute=&quot;elAlumno&quot; &gt;
+        
+            &lt;label for=&quot;nombre&quot;&gt;Nombre:&lt;/label&gt;
+            &lt;!-- path=&quot;[getNombreClaseAlumno]&quot; se debe escribir sin el prefijo &quot;get&quot; y la primera letra minuscula --&gt;
+            &lt;form:input path=&quot;nombre&quot; id=&quot;nombre&quot;/&gt;
+            
+            &lt;label for=&quot;nombre&quot;&gt;Apellido:&lt;/label&gt;
+            &lt;!-- path=&quot;[getApellidoClaseAlumno]&quot; se debe escribir sin el prefijo &quot;get&quot; y la primera letra minuscula --&gt;
+            &lt;form:input path=&quot;apellido&quot; id=&quot;apellido&quot;/&gt;
+            
+            &lt;p&gt;Asignaturas Optativas:&lt;/p&gt;
+            
+            &lt;form:select path=&quot;optativas&quot; multiple=&quot;true&quot;&gt;
+                &lt;form:option value=&quot;Dise&#xF1;o&quot; label=&quot;Dise&#xF1;o&quot; /&gt;
+                &lt;form:option value=&quot;Karate&quot; label=&quot;Karate&quot; /&gt;
+                &lt;form:option value=&quot;Comercio&quot; label=&quot;Comercio&quot; /&gt;
+                &lt;form:option value=&quot;Danza&quot; label=&quot;Danza&quot; /&gt;
+            &lt;/form:select&gt;
+            
+            Barcelona&lt;form:radiobutton path=&quot;ciudadEstudios&quot; value=&quot;Barcelona&quot; /&gt;
+            Madrid&lt;form:radiobutton path=&quot;ciudadEstudios&quot; value=&quot;Madrid&quot; /&gt;
+            Valencia&lt;form:radiobutton path=&quot;ciudadEstudios&quot; value=&quot;Valencia&quot; /&gt;
+            Bilbao&lt;form:radiobutton path=&quot;ciudadEstudios&quot; value=&quot;Bilbao&quot; /&gt;
+            
+            
+            
+            &lt;input type=&quot;submit&quot; value=&quot;Enviar&quot; /&gt;
+        
+        &lt;/form:form&gt;
+
+&lt;/html&gt;
+</pre>
+<h2 class="mume-header" id="modificar-la-vista-confirmacionregistroalumnojsp">Modificar la vista confirmacionRegistroAlumno.jsp</h2>
+
+<p>&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot; pageEncoding=&quot;UTF-8&quot;%&gt;</p>
+<pre class="language-text">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;Confirmaci&#xF3;n de Registro&lt;/title&gt;
+&lt;/head&gt;
+    &lt;body&gt;
+        &lt;p&gt;El alumno: &lt;strong&gt;${elAlumno.nombre}&lt;/strong&gt; y apellido: &lt;strong&gt;${elAlumno.apellido}&lt;/strong&gt;&lt;/p&gt;
+        &lt;p&gt;La Asignatura escogida es: &lt;strong&gt;${elAlumno.optativas}&lt;/strong&gt;
+        &lt;p&gt;La ciudad donde iniciar&#xE1; los estudios es: ${elAlumno.ciudadEstudios}&lt;/p&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<h2 class="mume-header" id="agregar-checkboxes">Agregar Checkboxes</h2>
+
+<h3 class="mume-header" id="crearemos-otra-proiedad-en-la-clase-alumnojava">Crearemos otra proiedad en la clase Alumno.java</h3>
+
+<pre class="language-text">package com.JarodSmith.spring.mvc;
+
+public class Alumno {
+
+    private String nombre;
+    private String apellido;
+    private String optativas;
+    private String ciudadEstudios;
+    private String idiomasAlumno;
+    
+    public String getNombre() {
+        return nombre;
+    }
+    
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    
+    public String getApellido() {
+        return apellido;
+    }
+    
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+    
+    public String getOptativas() {
+        return optativas;
+    }
+    
+    public void setOptativas(String optativa) {
+        this.optativas = optativa;
+    }
+
+    public String getCiudadEstudios() {
+        return ciudadEstudios;
+    }
+
+    public void setCiudadEstudios(String ciudadEstudios) {
+        this.ciudadEstudios = ciudadEstudios;
+    }
+
+    public String getIdiomasAlumno() {
+        return idiomasAlumno;
+    }
+
+    public void setIdiomasAlumno(String idiomasAlumno) {
+        this.idiomasAlumno = idiomasAlumno;
+    }
+    
+}
+</pre>
+<h2 class="mume-header" id="modificaremos-la-vista-alumnoregistroformulariojsp">Modificaremos la vista alumnoRegistroFormulario.jsp</h2>
+
+<pre class="language-text">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot; pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;%@ taglib prefix=&quot;form&quot; uri=&quot;http://www.springframework.org/tags/form&quot; %&gt; 
+
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;UTF-8&quot;&gt;
+        &lt;title&gt;FORM MVC TAGS&lt;/title&gt;
+    &lt;/head&gt;
 
 
+        &lt;h1&gt;Form MVC Tags&lt;/h1&gt;
+        
+        &lt;hr&gt;
+        &lt;h2&gt;Formulario de Registro&lt;/h2&gt;
+        
+        &lt;form:form action=&quot;procesarFormulario&quot; modelAttribute=&quot;elAlumno&quot; &gt;
+        
+            &lt;label for=&quot;nombre&quot;&gt;Nombre:&lt;/label&gt;
+            &lt;!-- path=&quot;[getNombreClaseAlumno]&quot; se debe escribir sin el prefijo &quot;get&quot; y la primera letra minuscula --&gt;
+            &lt;form:input path=&quot;nombre&quot; id=&quot;nombre&quot;/&gt;
+            
+            &lt;label for=&quot;nombre&quot;&gt;Apellido:&lt;/label&gt;
+            &lt;!-- path=&quot;[getApellidoClaseAlumno]&quot; se debe escribir sin el prefijo &quot;get&quot; y la primera letra minuscula --&gt;
+            &lt;form:input path=&quot;apellido&quot; id=&quot;apellido&quot;/&gt;
+            
+            &lt;p&gt;Asignaturas Optativas:&lt;/p&gt;
+            
+            &lt;form:select path=&quot;optativas&quot; multiple=&quot;true&quot;&gt;
+                &lt;form:option value=&quot;Dise&#xF1;o&quot; label=&quot;Dise&#xF1;o&quot; /&gt;
+                &lt;form:option value=&quot;Karate&quot; label=&quot;Karate&quot; /&gt;
+                &lt;form:option value=&quot;Comercio&quot; label=&quot;Comercio&quot; /&gt;
+                &lt;form:option value=&quot;Danza&quot; label=&quot;Danza&quot; /&gt;
+            &lt;/form:select&gt;
+            
+            Barcelona&lt;form:radiobutton path=&quot;ciudadEstudios&quot; value=&quot;Barcelona&quot; /&gt;
+            Madrid&lt;form:radiobutton path=&quot;ciudadEstudios&quot; value=&quot;Madrid&quot; /&gt;
+            Valencia&lt;form:radiobutton path=&quot;ciudadEstudios&quot; value=&quot;Valencia&quot; /&gt;
+            Bilbao&lt;form:radiobutton path=&quot;ciudadEstudios&quot; value=&quot;Bilbao&quot; /&gt;
+            
+            Ingl&#xE9;s&lt;form:checkbox path=&quot;idiomasAlumno&quot; value=&quot;Ingl&#xE9;s&quot; /&gt;
+            Franc&#xE9;s&lt;form:checkbox path=&quot;idiomasAlumno&quot; value=&quot;Franc&#xE9;s&quot; /&gt;
+            Alem&#xE1;n&lt;form:checkbox path=&quot;idiomasAlumno&quot; value=&quot;Alem&#xE1;n&quot; /&gt;
+            Chino&lt;form:checkbox path=&quot;idiomasAlumno&quot; value=&quot;Chino&quot; /&gt;
+            
+            &lt;input type=&quot;submit&quot; value=&quot;Enviar&quot; /&gt;
+        
+        &lt;/form:form&gt;
+
+&lt;/html&gt;
+</pre>
+<h2 class="mume-header" id="adem%C3%A1s-de-la-vista-confirmacionregistroalumnojsp">Adem&#xE1;s de la vista: confirmacionRegistroAlumno.jsp</h2>
+
+<p>&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot; pageEncoding=&quot;UTF-8&quot;%&gt;</p>
+<pre class="language-text">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;Confirmaci&#xF3;n de Registro&lt;/title&gt;
+&lt;/head&gt;
+    &lt;body&gt;
+        &lt;p&gt;El alumno: &lt;strong&gt;${elAlumno.nombre}&lt;/strong&gt; y apellido: &lt;strong&gt;${elAlumno.apellido}&lt;/strong&gt;&lt;/p&gt;
+        &lt;p&gt;La Asignatura escogida es: &lt;strong&gt;${elAlumno.optativas}&lt;/strong&gt;
+        &lt;p&gt;La ciudad donde iniciar&#xE1; los estudios es: &lt;strong&gt;${elAlumno.ciudadEstudios}&lt;/strong&gt;&lt;/p&gt;
+        &lt;p&gt;Los idiomas escogidos por el alumno son: &lt;strong&gt;${elAlumno.idiomasAlumno}&lt;/strong&gt;&lt;/p&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</pre>
 </div></body></html>
     </div>
   </body>
