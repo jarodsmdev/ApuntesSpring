@@ -66,6 +66,65 @@
 </tr>
 </tbody>
 </table>
+<h2 class="mume-header" id="crear-controlador-alumnocontrollerjava">Crear controlador: AlumnoController.java</h2>
+
+<pre class="language-text">package com.JarodSmith.spring.mvc;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping(&quot;/alumno&quot;)
+public class AlumnoController {
+
+    @RequestMapping(&quot;/muestraFormulario&quot;)
+    public String muestraFormulario(Model modelo) {
+        
+        //CREAR OBJETO ALUMNO
+        Alumno elAlumno = new Alumno();
+        
+        //GUARDAR DENTRO DEL MODELO EL OBJETO QUE VIAJAR&#xC1; DESDE ELFORMULARIO DE REGISTRO A LA VISTA DE CONFIRMACI&#xD3;N
+        modelo.addAttribute(&quot;elAlumno&quot;, elAlumno);
+        
+        //DEVOLVER EL FORMULARIO
+        return &quot;alumnoRegistroFormulario&quot;; //&lt;- NOMBRE DEL ARCHIVO JSP
+    }
+}
+</pre>
+<h2 class="mume-header" id="crear-la-vista-alumnoregistroformulariojsp">Crear la vista: alumnoRegistroFormulario.jsp</h2>
+
+<pre class="language-text">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot; pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;%@ taglib prefix=&quot;form&quot; uri=&quot;http://www.springframework.org/tags/form&quot; %&gt;
+ 
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;UTF-8&quot;&gt;
+        &lt;title&gt;FORM MVC TAGS&lt;/title&gt;
+    &lt;/head&gt;
+
+
+        &lt;h1&gt;Form MVC Tags&lt;/h1&gt;
+        
+        &lt;hr&gt;
+        &lt;h2&gt;Formulario de Registro&lt;/h2&gt;
+        
+        &lt;form:form action=&quot;procesarFormulario&quot; modelAttribute=&quot;elAlumno&quot;&gt;
+        
+            &lt;label for=&quot;nombre&quot;&gt;Nombre:&lt;/label&gt;
+            &lt;!-- path=&quot;[getNombreClaseAlumno]&quot; se debe escribir sin el prefijo &quot;get&quot; y la primera letra minuscula --&gt;
+            &lt;form:input path=&quot;nombre&quot; id=&quot;nombre&quot;/&gt;
+            
+            &lt;label for=&quot;nombre&quot;&gt;Apellido:&lt;/label&gt;
+            &lt;!-- path=&quot;[getApellidoClaseAlumno]&quot; se debe escribir sin el prefijo &quot;get&quot; y la primera letra minuscula --&gt;
+            &lt;form:input path=&quot;apellido&quot; id=&quot;apellido&quot;/&gt;
+            
+            &lt;input type=&quot;submit&quot; value=&quot;Enviar&quot; /&gt;
+        
+        &lt;/form:form&gt;
+
+&lt;/html&gt;</pre>
 </div></body></html>
     </div>
   </body>
