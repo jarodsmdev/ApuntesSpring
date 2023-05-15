@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Validación Formularios II</title>
+    <title>Validación Formularios III</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
@@ -17,14 +17,16 @@
   </head>
   <body for="html-export">
     <div class="mume markdown-preview">
-    <html><head></head><body><div><h1 class="mume-header" id="validaci%C3%B3n-de-formularios-i">Validaci&#xF3;n de Formularios II</h1>
+    <html><head></head><body><div><h1 class="mume-header" id="validaci%C3%B3n-de-formularios-iii">Validaci&#xF3;n de Formularios III</h1>
 
 <hr>
-<p>Vamos a realizar la primera validaci&#xF3;n al campo nombre, la cual ser&#xE1;n que no puede ser nulo en el atributo nombre de la clase Alumno</p>
-<h2 class="mume-header" id="clase-alumno">Clase Alumno</h2>
+<h2 class="mume-header" id="validaci%C3%B3n-num%C3%A9rica-campo-edad">Validaci&#xF3;n Num&#xE9;rica campo Edad</h2>
 
+<p>1.- Agregar un campo edad en la clase <code>Alumno.java</code> con las anotaciones para las validaciones</p>
 <pre class="language-text">package com.JarodSmith.spring.mvc;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -37,6 +39,9 @@ public class Alumno {
     private String optativas;
     private String ciudadEstudios;
     private String idiomasAlumno;
+    @Min(value=10, message = &quot;No se permiten edades menores a 10.&quot;)
+    @Max(value=150,message = &quot;No se permiten edades mayores a 150.&quot;)
+    private int edad;
     
     public String getNombre() {
         return nombre;
@@ -77,55 +82,18 @@ public class Alumno {
     public void setIdiomasAlumno(String idiomasAlumno) {
         this.idiomasAlumno = idiomasAlumno;
     }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
     
 }
 </pre>
-<h2 class="mume-header" id="luego-debemos-modificar-alumnocontrollerjava-especificamente-en-el-m%C3%A9todo-procesarformulario">Luego debemos modificar AlumnoController.java especificamente en el m&#xE9;todo <code>procesarFormulario</code></h2>
-
-<pre class="language-text">package com.JarodSmith.spring.mvc;
-
-import javax.validation.Valid;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-@Controller
-@RequestMapping(&quot;/alumno&quot;)
-public class AlumnoController {
-
-    @RequestMapping(&quot;/muestraFormulario&quot;)
-    public String muestraFormulario(Model modelo) {
-        
-        //CREAR OBJETO ALUMNO
-        Alumno elAlumno = new Alumno();
-        
-        //GUARDAR DENTRO DEL MODELO EL OBJETO QUE VIAJAR&#xC1; DESDE ELFORMULARIO DE REGISTRO A LA VISTA DE CONFIRMACI&#xD3;N
-        modelo.addAttribute(&quot;elAlumno&quot;, elAlumno);
-        
-        //DEVOLVER EL FORMULARIO
-        return &quot;alumnoRegistroFormulario&quot;;
-    }
-    
-    @RequestMapping(&quot;/procesarFormulario&quot;)
-    public String procesarFormulario(@Valid @ModelAttribute(&quot;elAlumno&quot;) Alumno elAlumno,
-                                    BindingResult resultadoValidacion) {
-        
-        //EN CASO DE EXISTIR ERROR EN EL FORMULARIO
-        if(resultadoValidacion.hasErrors()) {
-            return &quot;alumnoRegistroFormulario&quot;;
-        }else {
-            return &quot;confirmacionRegistroAlumno&quot;;
-        }
-        
-        
-    }
-}
-</pre>
-<h2 class="mume-header" id="para-finalizar-debemos-entregar-un-feedback-al-usuario-para-eso-modificaremos-la-vista-alumnoregistroformulario-y-agregaremos-una-etiqueta-abajo-de-forminput-pathnombre-idnombre-">Para finalizar debemos entregar un feedback al usuario, para eso modificaremos la vista <code>alumnoRegistroFormulario</code> y agregaremos una etiqueta abajo de <code>&lt;form:input path=&quot;nombre&quot; id=&quot;nombre&quot; /&gt;</code></h2>
-
+<p>2.- Modificaremos la vista del formulario de registro <code>alumnoRegistroFormulario.jsp</code></p>
 <pre class="language-text">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot; pageEncoding=&quot;UTF-8&quot;%&gt;
 &lt;%@ taglib prefix=&quot;form&quot; uri=&quot;http://www.springframework.org/tags/form&quot; %&gt; 
 
@@ -153,6 +121,11 @@ public class AlumnoController {
             &lt;label for=&quot;nombre&quot;&gt;Apellido:&lt;/label&gt;
             &lt;!-- path=&quot;[getApellidoClaseAlumno]&quot; se debe escribir sin el prefijo &quot;get&quot; y la primera letra minuscula --&gt;
             &lt;form:input path=&quot;apellido&quot; id=&quot;apellido&quot;/&gt;
+            
+            &lt;br /&gt;
+            &lt;label for=&quot;edad&quot;&gt;Edad:&lt;/label&gt;
+            &lt;form:input path=&quot;edad&quot; id=&quot;edad&quot; /&gt;
+            &lt;form:errors path=&quot;edad&quot; style=&quot;color:red;&quot; /&gt;
             
             &lt;p&gt;Asignaturas Optativas:&lt;/p&gt;
             
@@ -183,7 +156,202 @@ public class AlumnoController {
         
         &lt;/form:form&gt;
 
-&lt;/html&gt;</pre>
+&lt;/html&gt;
+</pre>
+<p>3.- Adem&#xE1;s debemos modificar la vista <code>confirmacionRegistroAlumno.jsp</code></p>
+<pre class="language-text">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot; pageEncoding=&quot;UTF-8&quot;%&gt;
+
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;Confirmaci&#xF3;n de Registro&lt;/title&gt;
+&lt;/head&gt;
+    &lt;body&gt;
+        &lt;p&gt;El alumno: &lt;strong&gt;${elAlumno.nombre}&lt;/strong&gt;, apellido: &lt;strong&gt;${elAlumno.apellido}&lt;/strong&gt; y edad: &lt;strong&gt;${elAlumno.edad}&lt;/strong&gt;&lt;/p&gt;
+        &lt;p&gt;La Asignatura escogida es: &lt;strong&gt;${elAlumno.optativas}&lt;/strong&gt;
+        &lt;p&gt;La ciudad donde iniciar&#xE1; los estudios es: &lt;strong&gt;${elAlumno.ciudadEstudios}&lt;/strong&gt;&lt;/p&gt;
+        &lt;p&gt;Los idiomas escogidos por el alumno son: &lt;strong&gt;${elAlumno.idiomasAlumno}&lt;/strong&gt;&lt;/p&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<h2 class="mume-header" id="validaci%C3%B3n-de-email">Validaci&#xF3;n de Email</h2>
+
+<p>1.- Agregar un campo email en la clase <code>Alumno.java</code> con las anotaciones para las validaciones</p>
+<pre class="language-text">package com.JarodSmith.spring.mvc;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+public class Alumno {
+
+    @NotNull
+    @Size(min=2, message = &quot;Campo requerido&quot;)
+    private String nombre;
+    
+    private String apellido;
+    private String optativas;
+    private String ciudadEstudios;
+    private String idiomasAlumno;
+    
+    @Min(value=10, message = &quot;No se permiten edades menores a 10.&quot;)
+    @Max(value=150,message = &quot;No se permiten edades mayores a 150.&quot;)
+    private int edad;
+    
+    @Email
+    private String email;
+    
+    public String getNombre() {
+        return nombre;
+    }
+    
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    
+    public String getApellido() {
+        return apellido;
+    }
+    
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+    
+    public String getOptativas() {
+        return optativas;
+    }
+    
+    public void setOptativas(String optativas) {
+        this.optativas = optativas;
+    }
+
+    public String getCiudadEstudios() {
+        return ciudadEstudios;
+    }
+
+    public void setCiudadEstudios(String ciudadEstudios) {
+        this.ciudadEstudios = ciudadEstudios;
+    }
+
+    public String getIdiomasAlumno() {
+        return idiomasAlumno;
+    }
+
+    public void setIdiomasAlumno(String idiomasAlumno) {
+        this.idiomasAlumno = idiomasAlumno;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+}
+</pre>
+<p>2.- Modificaremos la vista del formulario de registro <code>alumnoRegistroFormulario.jsp</code></p>
+<pre class="language-text">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot; pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;%@ taglib prefix=&quot;form&quot; uri=&quot;http://www.springframework.org/tags/form&quot; %&gt; 
+
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;UTF-8&quot;&gt;
+        &lt;title&gt;FORM MVC TAGS&lt;/title&gt;
+    &lt;/head&gt;
+
+
+        &lt;h1&gt;Form MVC Tags&lt;/h1&gt;
+        
+        &lt;hr&gt;
+        &lt;h2&gt;Formulario de Registro&lt;/h2&gt;
+        
+        &lt;form:form action=&quot;procesarFormulario&quot; modelAttribute=&quot;elAlumno&quot; &gt;
+        
+            &lt;label for=&quot;nombre&quot;&gt;Nombre:&lt;/label&gt;
+            &lt;!-- path=&quot;[getNombreClaseAlumno]&quot; se debe escribir sin el prefijo &quot;get&quot; y la primera letra minuscula --&gt;
+            &lt;form:input path=&quot;nombre&quot; id=&quot;nombre&quot;/&gt;
+            &lt;form:errors path=&quot;nombre&quot; style=&quot;color:red;&quot; /&gt;
+            
+            &lt;br /&gt;
+            &lt;label for=&quot;nombre&quot;&gt;Apellido:&lt;/label&gt;
+            &lt;!-- path=&quot;[getApellidoClaseAlumno]&quot; se debe escribir sin el prefijo &quot;get&quot; y la primera letra minuscula --&gt;
+            &lt;form:input path=&quot;apellido&quot; id=&quot;apellido&quot;/&gt;
+            
+            &lt;br /&gt;
+            &lt;label for=&quot;edad&quot;&gt;Edad:&lt;/label&gt;
+            &lt;form:input path=&quot;edad&quot; id=&quot;edad&quot; /&gt;
+            &lt;form:errors path=&quot;edad&quot; style=&quot;color:red;&quot; /&gt;
+            
+            &lt;br /&gt;
+            &lt;label for=&quot;email&quot;&gt;Email&lt;/label&gt;
+            &lt;form:input path=&quot;email&quot; id=&quot;email&quot; /&gt;
+            &lt;form:errors path=&quot;email&quot; style=&quot;color:red;&quot; /&gt;
+            
+            &lt;br /&gt;
+            
+            &lt;p&gt;Asignaturas Optativas:&lt;/p&gt;
+            
+            &lt;form:select path=&quot;optativas&quot; multiple=&quot;true&quot;&gt;
+                &lt;form:option value=&quot;Dise&#xF1;o&quot; label=&quot;Dise&#xF1;o&quot; /&gt;
+                &lt;form:option value=&quot;Karate&quot; label=&quot;Karate&quot; /&gt;
+                &lt;form:option value=&quot;Comercio&quot; label=&quot;Comercio&quot; /&gt;
+                &lt;form:option value=&quot;Danza&quot; label=&quot;Danza&quot; /&gt;
+            &lt;/form:select&gt;
+            
+            &lt;br /&gt;
+            
+            Barcelona&lt;form:radiobutton path=&quot;ciudadEstudios&quot; value=&quot;Barcelona&quot; /&gt;
+            Madrid&lt;form:radiobutton path=&quot;ciudadEstudios&quot; value=&quot;Madrid&quot; /&gt;
+            Valencia&lt;form:radiobutton path=&quot;ciudadEstudios&quot; value=&quot;Valencia&quot; /&gt;
+            Bilbao&lt;form:radiobutton path=&quot;ciudadEstudios&quot; value=&quot;Bilbao&quot; /&gt;
+            
+            &lt;br /&gt;
+            
+            Ingl&#xE9;s&lt;form:checkbox path=&quot;idiomasAlumno&quot; value=&quot;Ingl&#xE9;s&quot; /&gt;
+            Franc&#xE9;s&lt;form:checkbox path=&quot;idiomasAlumno&quot; value=&quot;Franc&#xE9;s&quot; /&gt;
+            Alem&#xE1;n&lt;form:checkbox path=&quot;idiomasAlumno&quot; value=&quot;Alem&#xE1;n&quot; /&gt;
+            Chino&lt;form:checkbox path=&quot;idiomasAlumno&quot; value=&quot;Chino&quot; /&gt;
+            
+            &lt;br /&gt;
+            
+            &lt;input type=&quot;submit&quot; value=&quot;Enviar&quot; /&gt;
+        
+        &lt;/form:form&gt;
+
+&lt;/html&gt;
+</pre>
+<p>3.- Adem&#xE1;s debemos modificar la vista <code>confirmacionRegistroAlumno.jsp</code></p>
+<pre class="language-text">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot; pageEncoding=&quot;UTF-8&quot;%&gt;
+
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;Confirmaci&#xF3;n de Registro&lt;/title&gt;
+&lt;/head&gt;
+    &lt;body&gt;
+        &lt;p&gt;El alumno: &lt;strong&gt;${elAlumno.nombre}&lt;/strong&gt;, apellido: &lt;strong&gt;${elAlumno.apellido}&lt;/strong&gt; y edad: &lt;strong&gt;${elAlumno.edad}&lt;/strong&gt;&lt;/p&gt;
+        &lt;p&gt;Email: &lt;strong&gt;${elAlumno.email}&lt;/strong&gt;&lt;/p&gt;
+        &lt;p&gt;La Asignatura escogida es: &lt;strong&gt;${elAlumno.optativas}&lt;/strong&gt;
+        &lt;p&gt;La ciudad donde iniciar&#xE1; los estudios es: &lt;strong&gt;${elAlumno.ciudadEstudios}&lt;/strong&gt;&lt;/p&gt;
+        &lt;p&gt;Los idiomas escogidos por el alumno son: &lt;strong&gt;${elAlumno.idiomasAlumno}&lt;/strong&gt;&lt;/p&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</pre>
 </div></body></html>
     </div>
   </body>
