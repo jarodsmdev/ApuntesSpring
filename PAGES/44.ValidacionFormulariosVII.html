@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Apuntes Spring</title>
+    <title>Validaciones Formularios VII</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
@@ -15,59 +15,68 @@
     </style>
     
   </head>
-  <hr>
   <body for="html-export">
     <div class="mume markdown-preview">
-    <html><head></head><body><div><h1 class="mume-header" id="index">Index</h1>
+    <html><head></head><body><div><h1 class="mume-header" id="validaci%C3%B3n-de-formularios-vii">Validaci&#xF3;n de Formularios VII</h1>
 
-      <main>
-        <ul>
-            <li><a href="./PAGES/3.CoreSpring.html">Core Spring</a></li>
-            <li><a href="./PAGES/4.RquisitosSpring.html">Requisitos Spring</a></li>
-            <li><a href="./PAGES/6.InversionOfControl.html">Inversion of Control I</a></li>
-            <li><a href="./PAGES/8.IoC_2.html">Inversion of Control II</a></li>
-            <li><a href="./PAGES/8.IoC_2.html">Inversion of Control II</a></li>
-            <li><a href="./PAGES/9.DependencyInjection.html">Inyección de Dependencias I</a></li>
-            <li><a href="./PAGES/10.DependencyInjectionII.html">Inyección de Dependencias II</a></li>
-            <li><a href="./PAGES/11.DependencyInjectionIII.html">Inyección de Dependencias III</a></li>
-            <li><a href="./PAGES/12.DependencyInjectionIV.html">Inyección de Dependencias IV</a></li>
-            <li><a href="./PAGES/13.SingletonPrototype.html">Singleton y Prototype</a></li>
-            <li><a href="./PAGES/14.BeanLifeCycle.html">Ciclo de vida de los Beans</a></li>
-            <li><a href="./PAGES/15.JavaAnnotations.html">Java Annotations I</a></li>
-            <li><a href="./PAGES/16.JavaAnnotationsII.html">Java Annotations II</a></li>
-            <li><a href="./PAGES/17.JavaAnnotationsIII.html">Java Annotations III</a></li>
-            <li><a href="./PAGES/19.JavaAnnotationsIV.html">Java Annotations IV</a></li>
-            <li><a href="./PAGES/20.JavaAnnotationsV.html">Java Annotations V: Qualifier</a></li>
-            <li><a href="./PAGES/21.JavaAnnotationVII.html">Java Annotations: Scope</a></li>
-            <li><a href="./PAGES/22.JavaAnnotationsVIII.html">Java Annotations: @PostConstruct y @PreDestroy</a></li>
-            <li><a href="./PAGES/23.JavaAnnotations.Configuration.html">Java Annotations: @Configuration y @ComponentScan</a></li>
-            <li><a href="./PAGES/24.JavaAnnotationsBean.html">Java Annotations: @Bean</a></li>
-            <li><a href="./PAGES/25.JavaAnnotationsPropertySourceYValue.html">Java Annotations: @PropertySource y @Value</a></li>
-            <li><a href="./PAGES/27.WebApplicationII.html">Aplicación Web dinámica: MVC</a></li>
-            <li><a href="./PAGES/28.WebApplicationIII.html">Aplicación Web dinámica: MVC II: Petición y Respuesta</a></li>
-            <li><a href="./PAGES/29.WebApplicationIV.html">Aplicación Web dinámica: MVC IV: Agregar datos al Modelo</a></li>
-            <li><a href="./PAGES/30.WebApplication.StaticFiles.html">Aplicación Web dinámica: MVC V: Static Files</a></li>
-            <li><a href="./PAGES/32.Annotation.RequestParam.html">Annotation: @RequestParam</a></li>
-            <li><a href="./PAGES/33.RequestMapping.ConflictoRutas.html">@RequestMapping: Conflicto de Rutas</a></li>
-            <li><a href="./PAGES/34.FormMVCTagsI.html">Form MVC Tags I</a></li>
-            <li><a href="./PAGES/35.FormMVCTagsII.html">Form MVC Tags II</a></li>
-            <li><a href="./PAGES/36.FormMVCTagsIII.html">Form MVC Tags III</a></li>
-            <li><a href="./PAGES/37.FormMVCTagsIV.html">Form MVC Tags IV</a></li>
-            <li><a href="./PAGES/38.ValidacionFormulariosI.html">Validación de Formularios I</a></li>
-            <li><a href="./PAGES/39.ValidacionFormulariosII.html">Validación de Formularios II</a></li>
-            <li><a href="./PAGES/40.ValidacionFormulariosIII.html">Validación de Formularios III</a></li>
-            <li><a href="./PAGES/41.ValidacionFormulariosIV.html">Validación de Formularios IV</a></li>
-            <li><a href="./PAGES/42.ValidacionFormularioV.html">Validación de Formularios V</a></li>
-            <li><a href="./PAGES/43.ValidacionFormulariosVI.html">Validación de Formularios VI</a></li>
-            <li><a href="./PAGES/44.ValidacionFormulariosVII.html">Validación de Formularios VII</a></li>
-            
-        </ul>
-    </main>
-    <footer>
-        
-    </footer>
+<hr>
+<h2 class="mume-header" id="validaciones-personalizadas">Validaciones Personalizadas</h2>
 
+<p>Intentaremos realizar una validaci&#xF3;n personalizada en el campo de c&#xF3;digo postal que s&#xF3;lo admita c&#xF3;digos que comiencen por 28.</p>
+<p>En esta p&#xE1;gina existe documentaci&#xF3;n en relaci&#xF3;n a las validaciones: <a href="https://www.baeldung.com/spring-mvc-custom-validator">https://www.baeldung.com/spring-mvc-custom-validator</a></p>
+<h3 class="mume-header" id="crear-nueva-anotaci%C3%B3n">Crear nueva anotaci&#xF3;n</h3>
 
+<p>Crearemos un nuevo paquete para que quede m&#xE1;s ordenado <code>validacionesPersonalizadas</code> y dentro de este nuevo paquete crearemos un archivo de tipo <code>Annotation.java</code> de nombre <code>CPostalMadrid.java</code></p>
+<pre class="language-text">package com.JarodSmith.spring.mvc.validacionesPersonalizadas;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+import javax.validation.Constraint;
+import javax.validation.Payload;
+
+@Constraint(validatedBy=CPostalMadridValidacion.class) //Clase que contendr&#xE1; la l&#xF3;gica de validaci&#xF3;n
+@Target({ElementType.METHOD, ElementType.FIELD}) //Destino de nuestra validaci&#xF3;n a m&#xE9;todos o a campos
+@Retention(RetentionPolicy.RUNTIME) //Chequea la anotaci&#xF3;n en tiempo de ejecuci&#xF3;n
+public @interface CPostalMadrid {
+    //Definir c&#xF3;digo postal por defecto
+    public String value() default &quot;28&quot;;
+    
+    //Definir el mensaje de error
+    public String message() default &quot;El c&#xF3;digo postal debe comenzar por 28.&quot;;
+    
+    //Definir los grupos
+    Class&lt;?&gt;[] groups() default {};
+    
+    //Definir los payloads
+    Class&lt;? extends Payload&gt;[] payload() default{};
+}
+</pre>
+<p>Crearemos una nueva clase <code>CPostalMadridValidacion.java</code></p>
+<pre class="language-text">package com.JarodSmith.spring.mvc.validacionesPersonalizadas;
+
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
+
+public class CPostalMadridValidacion implements ConstraintValidator&lt;CPostalMadrid, String&gt;{
+    
+    @Override
+    public void initialize(CPostalMadrid elCodigo) {
+        prefijoCodigoMadrid = elCodigo.value();
+    }
+
+    @Override
+    public boolean isValid(String arg0, ConstraintValidatorContext arg1) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+    
+    private String prefijoCodigoMadrid;
+
+}
+</pre>
 </div></body></html>
     </div>
   </body>
