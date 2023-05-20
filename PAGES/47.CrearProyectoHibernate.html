@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Validación Formularios I</title>
+    <title>Hibernate II</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
@@ -15,29 +15,61 @@
     </style>
     
   </head>
-  <header>
-    <nav>
-      <a href="../index.html">Volver</a>
-    </nav>
-  </header>
   <body for="html-export">
     <div class="mume markdown-preview">
-    <html><head></head><body><div><h1 class="mume-header" id="validaci%C3%B3n-de-formularios-i">Validaci&#xF3;n de Formularios I</h1>
+      <li><a href="../index.html">Volver</a></li>
+    <html><head></head><body><div><h1 class="mume-header" id="creaci%C3%B3n-de-proyecto">Creaci&#xF3;n de Proyecto</h1>
 
 <hr>
-<ol>
-<li>Debemos agregar a nuestro proyecto las librerias de validaci&#xF3;n
-<ul>
-<li>JSR 380 (Java Standar Request 380) Bean Valitation -&gt; Hibernate Validation</li>
-</ul>
-</li>
-<li>Especificar propiedades a validar en la clase correpondiente</li>
-<li>Especificar validaci&#xF3;n en el controlador</li>
-<li>Especificar mensaje de validacil&#xF3;n en formulario de registro</li>
-</ol>
-<p>Documentaci&#xF3;n y descarga</p>
-<p><a href="https://www.baeldung.com/javax-validation">https://www.baeldung.com/javax-validation</a><br>
-<a href="https://hibernate.org/validator/releases/6.0/">https://hibernate.org/validator/releases/6.0/</a></p>
+<h2 class="mume-header" id="descargar-librerias-hibernate-orm">Descargar librerias Hibernate ORM</h2>
+
+<p><a href="https://hibernate.org/orm/releases/5.4/">Hibernate ORM Release 5.4 Version</a><br>
+<a href="https://hibernate.org/orm/releases/">Hibernate ORM Releases</a></p>
+<h2 class="mume-header" id="connector-jdbc">Connector JDBC</h2>
+
+<p><a href="https://dev.mysql.com/downloads/connector/j/?os=26">MySQL Java Connector</a></p>
+<h2 class="mume-header" id="crear-proyecto">Crear Proyecto</h2>
+
+<p>File -&gt; New -&gt; Java Proyect (En la perspectiva Java de Eclipse)</p>
+<h2 class="mume-header" id="agregar-librer%C3%ADas">Agregar librer&#xED;as</h2>
+
+<p>New -&gt; Folder (lib) copiaremos el contenido de <code>lib/required</code> del archivo hibernate descargado, en el interior de la carpeta lib reci&#xE9;n creada y lo mismo con el archivo <code>mysql-connector-java-5.4.48-bin.jar</code> del connector mysql.</p>
+<h2 class="mume-header" id="configurar-el-libpath">Configurar el libPath</h2>
+
+<p>Bot&#xF3;n secundario sobre el proyecto -&gt; build Path -&gt; Configure build path -&gt; libraries -&gt; Add JARs</p>
+<p>Seleccionar la carpeta lib y luego todo el contenido de la carpeta lib -&gt; Apply and Close</p>
+<h2 class="mume-header" id="crear-bd-en-el-gestor-mysql">Crear BD en el gestor MySQL</h2>
+
+<pre class="language-text">DROP DATABASE IF EXISTS pruebasHibernate;
+CREATE DATABASE IF NOT EXISTS pruebasHibernate;
+USE pruebasHibernate;
+</pre>
+<h2 class="mume-header" id="crear-package-comjarodsmithpruebashibernate">Crear Package <code>com.jarodsmith.pruebasHibernate</code></h2>
+
+<p>En su interior crearemos una clase con un m&#xE9;todo main para realizar pruebas de conexi&#xF3;n</p>
+<pre class="language-text">package com.jarodsmith.pruebasHibernate;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+public class PruebasJDBC {
+
+    public static void main(String[] args) {
+        String jdbcURL = &quot;jdbc:mysql://localhost:3306/pruebasHibernate?useSSL=false&quot;;
+        String username = &quot;root&quot;;
+        String password = &quot;12345&quot;;
+        
+        try {
+            System.out.println(&quot;Intentando conectar con la BBDD: &quot; + jdbcURL);
+            Connection miConexion = DriverManager.getConnection(jdbcURL, username, password);
+            System.out.println(&quot;&#xA1;Conexi&#xF3;n Exitosa!.&quot;);
+        }catch(Exception e) {
+            e.printStackTrace();
+            System.out.println(&quot;**&#xA1;&#xA1;Fallo en la Conexi&#xF3;n!!**&quot;);
+        }
+    }
+}
+</pre>
 </div></body></html>
     </div>
   </body>
