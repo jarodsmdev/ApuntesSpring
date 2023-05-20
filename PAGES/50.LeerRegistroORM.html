@@ -20,6 +20,87 @@
     <html><head></head><body><div><h1 class="mume-header" id="lectura-registros-orm">Lectura Registros ORM</h1>
 
 <hr>
+<h2 class="mume-header" id="asignar-clave-principal-a-hibernate">Asignar clave principal a Hibernate</h2>
+
+<p>Esto se debe indicar mediante la antotacion <code>@GeneratedValue</code> sobre el campo en la clase indicada <code>Clientes</code> en este caso.</p>
+<pre class="language-text">package com.jarodsmith.conexionHibernate;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name=&quot;clientes&quot;)
+public class Clientes {
+    
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)//ASIGNAR CLAVE PRIMARIA
+    @Column(name=&quot;Id&quot;)
+    private int id;
+    
+    @Column(name=&quot;Nombre&quot;)
+    private String nombre;
+    
+    @Column(name=&quot;Apellidos&quot;)
+    private String apellido;
+    
+    @Column(name=&quot;Direccion&quot;)
+    private String direccion;
+
+
+    public Clientes() {
+    }
+
+    public Clientes(String nombre, String apellido, String direccion) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.direccion = direccion;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    @Override
+    public String toString() {
+        return &quot;Clientes [id=&quot; + id + &quot;, nombre=&quot; + nombre + &quot;, apellido=&quot; + apellido + &quot;, direccion=&quot; + direccion + &quot;]&quot;;
+    }
+    
+}
+</pre>
+<h2 class="mume-header" id="crearemos-la-clase-leerclientepruebajava-para-realizar-la-lectura">Crearemos la clase <code>LeerClientePrueba.java</code> para realizar la lectura</h2>
+
 <pre class="language-text">package com.jarodsmith.conexionHibernate;
 
 import org.hibernate.Session;
