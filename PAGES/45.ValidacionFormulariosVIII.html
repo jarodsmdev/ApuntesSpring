@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Apuntes Spring</title>
+    <title>Validación Formularios VIII</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
@@ -15,77 +15,102 @@
     </style>
     
   </head>
-  <hr>
   <body for="html-export">
     <div class="mume markdown-preview">
-    <html><head></head><body><div><h1 class="mume-header" id="index">Index</h1>
+    <html><head></head><body><div><h1 class="mume-header" id="validaci%C3%B3n-de-formularios-viii">Validaci&#xF3;n de Formularios VIII</h1>
 
-      <main>
-        <ul>
-            <li><a href="./PAGES/3.CoreSpring.html">Core Spring</a></li>
-            <li><a href="./PAGES/4.RquisitosSpring.html">Requisitos Spring</a></li>
-            <li><a href="./PAGES/6.InversionOfControl.html">Inversion of Control I</a></li>
-            <li><a href="./PAGES/8.IoC_2.html">Inversion of Control II</a></li>
-            <li><a href="./PAGES/8.IoC_2.html">Inversion of Control II</a></li>
-            <li><a href="./PAGES/9.DependencyInjection.html">Inyección de Dependencias I</a></li>
-            <li><a href="./PAGES/10.DependencyInjectionII.html">Inyección de Dependencias II</a></li>
-            <li><a href="./PAGES/11.DependencyInjectionIII.html">Inyección de Dependencias III</a></li>
-            <li><a href="./PAGES/12.DependencyInjectionIV.html">Inyección de Dependencias IV</a></li>
-            <li><a href="./PAGES/13.SingletonPrototype.html">Singleton y Prototype</a></li>
-            <li><a href="./PAGES/14.BeanLifeCycle.html">Ciclo de vida de los Beans</a></li>
-        </ul>
+<hr>
+<h1 class="mume-header" id="validaciones-personalizadas">Validaciones Personalizadas</h1>
 
-        <h2>Java Annotations</h2>
-        <ul>
-          <li><a href="./PAGES/15.JavaAnnotations.html">Java Annotations I</a></li>
-          <li><a href="./PAGES/16.JavaAnnotationsII.html">Java Annotations II</a></li>
-          <li><a href="./PAGES/17.JavaAnnotationsIII.html">Java Annotations III</a></li>
-          <li><a href="./PAGES/19.JavaAnnotationsIV.html">Java Annotations IV</a></li>
-          <li><a href="./PAGES/20.JavaAnnotationsV.html">Java Annotations V: Qualifier</a></li>
-          <li><a href="./PAGES/21.JavaAnnotationVII.html">Java Annotations: Scope</a></li>
-          <li><a href="./PAGES/22.JavaAnnotationsVIII.html">Java Annotations: @PostConstruct y @PreDestroy</a></li>
-          <li><a href="./PAGES/23.JavaAnnotations.Configuration.html">Java Annotations: @Configuration y @ComponentScan</a></li>
-          <li><a href="./PAGES/24.JavaAnnotationsBean.html">Java Annotations: @Bean</a></li>
-          <li><a href="./PAGES/25.JavaAnnotationsPropertySourceYValue.html">Java Annotations: @PropertySource y @Value</a></li>
-        </ul>
+<h3 class="mume-header" id="continuaremos-con-la-validaci%C3%B3n-del-capitulo-anterior-completando-el-m%C3%A9todo-isvalid-de-la-clase-cpostalmadridvalidacionjava-quedando-la-clase-de-la-siguiente-manera">Continuaremos con la validaci&#xF3;n del capitulo anterior, completando el m&#xE9;todo <code>isValid</code> de la clase <code>CPostalMadridValidacion.java</code> quedando la clase de la siguiente manera.</h3>
 
-        <h2>Aplicaciones Web Dinámicas - MVC</h2>
-        <ul>
-          <li><a href="./PAGES/27.WebApplicationII.html">Aplicación Web dinámica: MVC</a></li>
-          <li><a href="./PAGES/28.WebApplicationIII.html">Aplicación Web dinámica: MVC II: Petición y Respuesta</a></li>
-          <li><a href="./PAGES/29.WebApplicationIV.html">Aplicación Web dinámica: MVC IV: Agregar datos al Modelo</a></li>
-          <li><a href="./PAGES/30.WebApplication.StaticFiles.html">Aplicación Web dinámica: MVC V: Static Files</a></li>
-        </ul>
+<pre class="language-text">package com.JarodSmith.spring.mvc.validacionesPersonalizadas;
 
-          <ul>
-            <li><a href="./PAGES/32.Annotation.RequestParam.html">Annotation: @RequestParam</a></li>
-            <li><a href="./PAGES/33.RequestMapping.ConflictoRutas.html">@RequestMapping: Conflicto de Rutas</a></li>
-            <li><a href="./PAGES/34.FormMVCTagsI.html">Form MVC Tags I</a></li>
-            <li><a href="./PAGES/35.FormMVCTagsII.html">Form MVC Tags II</a></li>
-            <li><a href="./PAGES/36.FormMVCTagsIII.html">Form MVC Tags III</a></li>
-            <li><a href="./PAGES/37.FormMVCTagsIV.html">Form MVC Tags IV</a></li>
-          </ul>
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 
-        <h2>Validación de Formularios</h2>
-        <ul>
-          <li><a href="./PAGES/38.ValidacionFormulariosI.html">Validación de Formularios I</a></li>
-          <li><a href="./PAGES/39.ValidacionFormulariosII.html">Validación de Formularios II</a></li>
-          <li><a href="./PAGES/40.ValidacionFormulariosIII.html">Validación de Formularios III</a></li>
-          <li><a href="./PAGES/41.ValidacionFormulariosIV.html">Validación de Formularios IV</a></li>
-          <li><a href="./PAGES/42.ValidacionFormularioV.html">Validación de Formularios V</a></li>
-          <li><a href="./PAGES/43.ValidacionFormulariosVI.html">Validación de Formularios VI</a></li>
-          <li><a href="./PAGES/44.ValidacionFormulariosVII.html">Validación de Formularios VII</a></li>
-          <li><a href="./PAGES/45.ValidacionFormulariosVIII.html">Validación de Formularios VIII</a></li>
-        </ul>
-            
+public class CPostalMadridValidacion implements ConstraintValidator&lt;CPostalMadrid, String&gt;{
+    
+    @Override
+    public void initialize(CPostalMadrid elCodigo) {
+        prefijoCodigoMadrid = elCodigo.value();
+    }
 
-
-    </main>
-    <footer>
+    @Override
+    public boolean isValid(String arg0, ConstraintValidatorContext arg1) {
+        //En argumento arg0 se alacenar&#xE1; lo que el usuario introduzca en el campo c&#xF3;digo postal de la vista, y se comparar&#xE1; con el campo de clase prefijoCodigoMadrid que tiene almacenado un 28
         
-    </footer>
+        boolean valCodigo;
+        
+        if(arg0 != null) valCodigo = arg0.startsWith(prefijoCodigoMadrid); //retorna true o false seg&#xFA;n sea el caso.
+        else return valCodigo = true;
+        
+        return valCodigo;
+    }
+    
+    private String prefijoCodigoMadrid;
 
+}
+</pre>
+<h3 class="mume-header" id="s%C3%B3lo-nos-falta-agregar-la-anotaci%C3%B3n-al-atributo-de-la-clase-alumnojava-que-lleva-la-validaci%C3%B3n-personalizada-que-hemos-creado-en-este-caso-codigopostal">S&#xF3;lo nos falta agregar la anotaci&#xF3;n al atributo de la clase <code>Alumno.java</code> que lleva la validaci&#xF3;n personalizada que hemos creado en este caso <code>codigoPostal</code></h3>
 
+<pre class="language-text">package com.JarodSmith.spring.mvc;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import com.JarodSmith.spring.mvc.validacionesPersonalizadas.CPostalMadrid;
+
+public class Alumno {
+
+    @NotNull(message = &quot;No puede estar vac&#xED;o.&quot;)
+    @Size(min=2, message = &quot;Nombre debe tener como m&#xED;nimo 2 caracteres.&quot;)
+    private String nombre;
+    
+    private String apellido;
+    private String optativas;
+    private String ciudadEstudios;
+    private String idiomasAlumno;
+    
+    @Min(value=10, message = &quot;No se permiten edades menores a 10.&quot;)
+    @Max(value=150,message = &quot;No se permiten edades mayores a 150.&quot;)
+    private int edad;
+    
+    @Email(message = &quot;Debe ingresar un correo electr&#xF3;nico con formato v&#xE1;lido.&quot;)
+    private String email;
+    
+    @Pattern(regexp = &quot;[0-9]{5}&quot;, message = &quot;S&#xF3;lo 5 valores num&#xE9;ricos&quot;)
+    @CPostalMadrid
+    private String codigoPostal;
+    
+    public String getNombre() {
+        return nombre;
+    }
+    
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    
+    public String getApellido() {
+        return apellido;
+    }
+    
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+    
+    public String getOptativas() {
+        return optativas;
+    }
+    
+    public void setOptativas(String optativas) {
+        this.optativas = optativas;
+    }
+</pre>
 </div></body></html>
     </div>
   </body>
