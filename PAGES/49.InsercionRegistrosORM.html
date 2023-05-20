@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Hibernate III</title>
+    <title>Hibernate IV</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
@@ -17,152 +17,45 @@
   </head>
   <body for="html-export">
     <div class="mume markdown-preview">
-    <html><head></head><body><div><h1 class="mume-header" id="configurar-proyecto-hibernate">Configurar Proyecto Hibernate</h1>
+    <html><head></head><body><div><h1 class="mume-header" id="inserci%C3%B3n-registros-v%C3%ADa-orm">Inserci&#xF3;n Registros v&#xED;a ORM</h1>
 
 <hr>
-<h2 class="mume-header" id="configurar-proyecto-con-archivo-xml">Configurar proyecto con archivo XML</h2>
-
-<p><a href="http://www.cursohibernate.es/doku.php?id=unidades:02_hibernate:03_configurando">http://www.cursohibernate.es/doku.php?id=unidades:02_hibernate:03_configurando</a></p>
-<p>Crearemos un archivo xml en la ra&#xED;z de nuestro proyecto <code>src/hibernate.cfg.xml</code></p>
-<pre class="language-text">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;!DOCTYPE hibernate-configuration PUBLIC &quot;-//Hibernate/Hibernate Configuration DTD 3.0//EN&quot; &quot;http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd&quot;&gt;
-&lt;hibernate-configuration&gt;
-&lt;session-factory&gt;
-    &lt;property name=&quot;connection.driver_class&quot;&gt;com.mysql.jdbc.Driver&lt;/property&gt;
-    &lt;property name=&quot;connection.url&quot;&gt;jdbc:mysql://localhost:3306/pruebasHibernate?useSSL=false&lt;/property&gt;
-    &lt;property name=&quot;connection.username&quot;&gt;root&lt;/property&gt;
-    &lt;property name=&quot;connection.password&quot;&gt;12345&lt;/property&gt;
-    &lt;property name=&quot;dialect&quot;&gt;org.hibernate.dialect.MySQL5Dialect&lt;/property&gt;
-    &lt;property name=&quot;hibernate.show_sql&quot;&gt;true&lt;/property&gt;
-
-
-&lt;/session-factory&gt;
-&lt;/hibernate-configuration&gt;
-</pre>
-<h2 class="mume-header" id="crear-la-tabla-clientes">Crear la tabla <code>clientes</code></h2>
-
-<pre class="language-text">DROP DATABASE IF EXISTS pruebasHibernate;
-CREATE DATABASE IF NOT EXISTS pruebasHibernate;
-USE pruebasHibernate;
-
-CREATE TABLE clientes(
-    Id INT AUTO_INCREMENT PRIMARY KEY,
-    Nombre VARCHAR(20),
-    Apellidos VARCHAR(30),
-    Direccion VARCHAR(50)
-);
-</pre>
-<h2 class="mume-header" id="crear-package-conexionhibernate-y-dentro-la-clase-clientes">Crear package <code>conexionHibernate</code> y dentro la clase <code>Clientes</code></h2>
+<p>Para realizar la inserci&#xF3;n de registros en la BBDD v&#xED;a ORM es necesario utilizar una clase <code>Session</code> y una interfaz <code>SessionFactory</code></p>
+<h2 class="mume-header" id="crear-una-nueva-clase-guardarclientepruebajava-con-un-m%C3%A9todo-main">Crear una nueva clase <code>GuardarClientePrueba.java</code> con un m&#xE9;todo main</h2>
 
 <pre class="language-text">package com.jarodsmith.conexionHibernate;
 
-public class Clientes {
-    private int id;
-    private String nombre;
-    private String apellido;
-    private String direccion;
-}
-</pre>
-<h2 class="mume-header" id="crear-anotaciones-para-que-hibernate-pueda-mapear-la-clase">Crear anotaciones para que hibernate pueda mapear la clase</h2>
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
-<pre class="language-text">package com.jarodsmith.conexionHibernate;
+public class GuardarClientePrueba {
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+    public static void main(String[] args) {
+        
+        SessionFactory miFactory = new Configuration().configure(&quot;hibernate.cfg.xml&quot;).addAnnotatedClass(Clientes.class).buildSessionFactory();
 
-@Entity
-@Table(name=&quot;clientes&quot;)
-public class Clientes {
-    
-    @Id
-    @Column(name=&quot;Id&quot;)
-    private int id;
-
-    @Column(name=&quot;Nombre&quot;)
-    private String nombre;
-
-    @Column(name=&quot;Apellidos&quot;)
-    private String apellido;
-
-    @Column(name=&quot;Direccion&quot;)
-    private String direccion;
-}
-</pre>
-<h2 class="mume-header" id="generaremos-constructores-m%C3%A9todos-accesores-y-modificadores-adem%C3%A1s-del-m%C3%A9todo-tostring-quedando-la-clase-clientesjava-de-la-siguiente-manera">Generaremos Constructores, m&#xE9;todos accesores y modificadores, adem&#xE1;s del m&#xE9;todo toString() quedando la clase <code>Clientes.java</code> de la siguiente manera.</h2>
-
-<pre class="language-text">package com.jarodsmith.conexionHibernate;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table(name=&quot;clientes&quot;)
-public class Clientes {
-    
-    @Id
-    @Column(name=&quot;Id&quot;)
-    private int id;
-    
-    @Column(name=&quot;Nombre&quot;)
-    private String nombre;
-    
-    @Column(name=&quot;Apellidos&quot;)
-    private String apellido;
-    
-    @Column(name=&quot;Direccion&quot;)
-    private String direccion;
-
-
-    public Clientes() {
+        Session miSesion = miFactory.openSession();
+        
+        try {
+            Clientes cliente1 = new Clientes(&quot;Jarod&quot;, &quot;Smith&quot;, &quot;Gran Avenida&quot;);
+            
+            miSesion.beginTransaction();
+            
+            miSesion.save(cliente1);
+            
+            miSesion.getTransaction().commit();
+            
+            System.out.println(&quot;&#xA1;Registro insertado correctamente!.&quot;);
+            
+            miSesion.close();
+            
+        }finally {
+            
+            miFactory.close();
+        }
     }
 
-    public Clientes(String nombre, String apellido, String direccion) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.direccion = direccion;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
-    @Override
-    public String toString() {
-        return &quot;Clientes [id=&quot; + id + &quot;, nombre=&quot; + nombre + &quot;, apellido=&quot; + apellido + &quot;, direccion=&quot; + direccion + &quot;]&quot;;
-    }
-    
 }
 </pre>
 </div></body></html>
