@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Apuntes Spring</title>
+    <title>Relaciones entre tablas III</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
@@ -15,93 +15,161 @@
     </style>
     
   </head>
-  <hr>
   <body for="html-export">
     <div class="mume markdown-preview">
-    <html><head></head><body><div><h1 class="mume-header" id="index">Index</h1>
+    <html><head></head><body><div><h1 class="mume-header" id="relaciones-entre-tablas-iii">Relaciones entre tablas III</h1>
 
-      <main>
-        <ul>
-            <li><a href="./PAGES/3.CoreSpring.html">Core Spring</a></li>
-            <li><a href="./PAGES/4.RquisitosSpring.html">Requisitos Spring</a></li>
-            <li><a href="./PAGES/6.InversionOfControl.html">Inversion of Control I</a></li>
-            <li><a href="./PAGES/8.IoC_2.html">Inversion of Control II</a></li>
-            <li><a href="./PAGES/8.IoC_2.html">Inversion of Control II</a></li>
-            <li><a href="./PAGES/9.DependencyInjection.html">Inyección de Dependencias I</a></li>
-            <li><a href="./PAGES/10.DependencyInjectionII.html">Inyección de Dependencias II</a></li>
-            <li><a href="./PAGES/11.DependencyInjectionIII.html">Inyección de Dependencias III</a></li>
-            <li><a href="./PAGES/12.DependencyInjectionIV.html">Inyección de Dependencias IV</a></li>
-            <li><a href="./PAGES/13.SingletonPrototype.html">Singleton y Prototype</a></li>
-            <li><a href="./PAGES/14.BeanLifeCycle.html">Ciclo de vida de los Beans</a></li>
-        </ul>
+<hr>
+<p>Antes de continuar nos falta crear los setter y getter del campo <code>detallesCliente</code> en la clase <code>Cliente.java</code> quedando de la siguiente manera la clase:</p>
+<h2 class="mume-header" id="clase-clientejava">Clase <code>Cliente.java</code></h2>
 
-        <h2>Java Annotations</h2>
-        <ul>
-          <li><a href="./PAGES/15.JavaAnnotations.html">Java Annotations I</a></li>
-          <li><a href="./PAGES/16.JavaAnnotationsII.html">Java Annotations II</a></li>
-          <li><a href="./PAGES/17.JavaAnnotationsIII.html">Java Annotations III</a></li>
-          <li><a href="./PAGES/19.JavaAnnotationsIV.html">Java Annotations IV</a></li>
-          <li><a href="./PAGES/20.JavaAnnotationsV.html">Java Annotations V: Qualifier</a></li>
-          <li><a href="./PAGES/21.JavaAnnotationVII.html">Java Annotations: Scope</a></li>
-          <li><a href="./PAGES/22.JavaAnnotationsVIII.html">Java Annotations: @PostConstruct y @PreDestroy</a></li>
-          <li><a href="./PAGES/23.JavaAnnotations.Configuration.html">Java Annotations: @Configuration y @ComponentScan</a></li>
-          <li><a href="./PAGES/24.JavaAnnotationsBean.html">Java Annotations: @Bean</a></li>
-          <li><a href="./PAGES/25.JavaAnnotationsPropertySourceYValue.html">Java Annotations: @PropertySource y @Value</a></li>
-        </ul>
+<pre class="language-text">package com.jarodsmith.conexionHibernate;
 
-        <h2>Aplicaciones Web Dinámicas - MVC</h2>
-        <ul>
-          <li><a href="./PAGES/27.WebApplicationII.html">Aplicación Web dinámica: MVC</a></li>
-          <li><a href="./PAGES/28.WebApplicationIII.html">Aplicación Web dinámica: MVC II: Petición y Respuesta</a></li>
-          <li><a href="./PAGES/29.WebApplicationIV.html">Aplicación Web dinámica: MVC IV: Agregar datos al Modelo</a></li>
-          <li><a href="./PAGES/30.WebApplication.StaticFiles.html">Aplicación Web dinámica: MVC V: Static Files</a></li>
-        </ul>
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-          <ul>
-            <li><a href="./PAGES/32.Annotation.RequestParam.html">Annotation: @RequestParam</a></li>
-            <li><a href="./PAGES/33.RequestMapping.ConflictoRutas.html">@RequestMapping: Conflicto de Rutas</a></li>
-            <li><a href="./PAGES/34.FormMVCTagsI.html">Form MVC Tags I</a></li>
-            <li><a href="./PAGES/35.FormMVCTagsII.html">Form MVC Tags II</a></li>
-            <li><a href="./PAGES/36.FormMVCTagsIII.html">Form MVC Tags III</a></li>
-            <li><a href="./PAGES/37.FormMVCTagsIV.html">Form MVC Tags IV</a></li>
-          </ul>
+@Entity
+@Table(name=&quot;cliente&quot;)
+public class Cliente {
+    
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)//ASIGNAR CLAVE PRIMARIA
+    @Column(name=&quot;id&quot;)
+    private int id;
+    
+    @Column(name=&quot;nombre&quot;)
+    private String nombre;
+    
+    @Column(name=&quot;apellido&quot;)
+    private String apellido;
+    
+    @Column(name=&quot;direccion&quot;)
+    private String direccion;
+    
+    @OneToOne(cascade=CascadeType.ALL) //RELACI&#xD3;N UNO A UNO
+    @JoinColumn(name=&quot;id&quot;) //INDICAR EL CAMPO DE RELACION ENTRE AMBAS TABLAS
+    private DetallesCliente detallesCliente;
 
-        <h2>Validación de Formularios</h2>
-        <ul>
-          <li><a href="./PAGES/38.ValidacionFormulariosI.html">Validación de Formularios I</a></li>
-          <li><a href="./PAGES/39.ValidacionFormulariosII.html">Validación de Formularios II</a></li>
-          <li><a href="./PAGES/40.ValidacionFormulariosIII.html">Validación de Formularios III</a></li>
-          <li><a href="./PAGES/41.ValidacionFormulariosIV.html">Validación de Formularios IV</a></li>
-          <li><a href="./PAGES/42.ValidacionFormularioV.html">Validación de Formularios V</a></li>
-          <li><a href="./PAGES/43.ValidacionFormulariosVI.html">Validación de Formularios VI</a></li>
-          <li><a href="./PAGES/44.ValidacionFormulariosVII.html">Validación de Formularios VII</a></li>
-          <li><a href="./PAGES/45.ValidacionFormulariosVIII.html">Validación de Formularios VIII</a></li>
-        </ul>
-            
 
-        <h2>Hibernate - Acceso a datos</h2>
-        <ul>
-          <li><a href="./PAGES/46.Hibernate.html">Hibernate</a></li>
-          <li><a href="./PAGES/47.CrearProyectoHibernate.html">Hibernate II</a></li>
-          <li><a href="./PAGES/48.ConfigurarProyectoHibernate.html">Hibernate III</a></li>
-          <li><a href="./PAGES/49.InsercionRegistrosORM.html">Hibernate IV</a></li>
-          <li><a href="./PAGES/50.LeerRegistroORM.html">Hibernate V</a></li>
-          <li><a href="./PAGES/51.ConsultasHQL.html">Hibernate VI - SELECT</a></li>
-          <li><a href="./PAGES/52.UpdateDeleteHQL.html">Hibernate VII UPDATE - DELETE</a></li>
-        </ul>
+    public Cliente() {
+    }
 
-        <h2>Hibernate - Relaciones Entre Tablas</h2>
-        <ul>
-          <li><a href="./PAGES/53.RelacionesEntreTablas.html">Hibernate - Relaciones entre Tablas I</a></li>
-          <li><a href="./PAGES/54.RelacionesEntreTablasII.html">Hibernate - Relaciones entre Tablas II (OneToOne)</a></li>
-          <li><a href="./PAGES/55.RelacionesEntreTablasIII.html">Hibernate - Relaciones entre Tablas III (OneToOne SAVE)</a></li>
-        </ul>
-    </main>
-    <footer>
+    public Cliente(String nombre, String apellido, String direccion) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.direccion = direccion;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public DetallesCliente getDetallesCliente() {
+        return detallesCliente;
+    }
+
+    public void setDetallesCliente(DetallesCliente detallesCliente) {
+        this.detallesCliente = detallesCliente;
+    }
+    
+}
+</pre>
+<h2 class="mume-header" id="clase-principal-insertaclientejava">Clase Principal <code>InsertaCliente.java</code></h2>
+
+<pre class="language-text">package com.jarodsmith.conexionHibernate;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
+public class InsertaCliente {
+
+    public static void main(String[] args) {
+        SessionFactory miFactory = new Configuration().configure(&quot;hibernate.cfg.xml&quot;)
+                                    .addAnnotatedClass(Cliente.class)
+                                    .addAnnotatedClass(DetallesCliente.class)
+                                    .buildSessionFactory();
         
-    </footer>
+        Session miSesion = miFactory.openSession();
+        
+        try {
+            
+            Cliente cliente = new Cliente(&quot;Sandra&quot;, &quot;Delgado&quot;, &quot;Goya #123&quot;);
+            DetallesCliente detallesCliente = new DetallesCliente(&quot;www.web.cl&quot;, &quot;9-123 456 78&quot;, &quot;Primer Cliente&quot;);
+            
+            //ASOCIAR LOS OBJETOS
+            cliente.setDetallesCliente(detallesCliente);
+            
+            miSesion.beginTransaction();
+            
+            //AQU&#xCD; GUARDA LA INFORMACI&#xD3;N EN LAS 2 TABLAS ASOCIADAS
+            miSesion.save(cliente);
+            
+            miSesion.getTransaction().commit();
+            
+            System.out.println(&quot;&#xA1;Registro insertado correctamente!&quot;);
+        }finally {
+            miSesion.close();
+            miFactory.close();
+        }
 
+    }
 
+}
+</pre>
+<h2 class="mume-header" id="confirmar-datos-en-la-bbdd">Confirmar datos en la BBDD</h2>
+
+<p><code>SELECT * FROM cliente;</code></p>
+<pre class="language-text">+----+--------+----------+-----------+
+| id | nombre | apellido | direccion |
++----+--------+----------+-----------+
+|  1 | Sandra | Delgado  | Goya #123 |
++----+--------+----------+-----------+
+1 row in set (0,00 sec)
+</pre>
+<p><code>SELECT * FROM detalles_cliente;</code></p>
+<pre class="language-text">+----+------------+--------------+----------------+
+| id | web        | tfno         | comentarios    |
++----+------------+--------------+----------------+
+|  1 | www.web.cl | 9-123 456 78 | Primer Cliente |
++----+------------+--------------+----------------+
+1 row in set (0,00 sec)
+</pre>
 </div></body></html>
     </div>
   </body>
