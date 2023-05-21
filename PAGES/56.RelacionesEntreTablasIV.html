@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Apuntes Spring</title>
+    <title>Relaciones entre Tablas IV</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
@@ -15,94 +15,62 @@
     </style>
     
   </head>
-  <hr>
   <body for="html-export">
     <div class="mume markdown-preview">
-    <html><head></head><body><div><h1 class="mume-header" id="index">Index</h1>
+    <html><head></head><body><div><h1 class="mume-header" id="relaciones-entre-tablas-iv">Relaciones entre tablas IV</h1>
 
-      <main>
-        <ul>
-            <li><a href="./PAGES/3.CoreSpring.html">Core Spring</a></li>
-            <li><a href="./PAGES/4.RquisitosSpring.html">Requisitos Spring</a></li>
-            <li><a href="./PAGES/6.InversionOfControl.html">Inversion of Control I</a></li>
-            <li><a href="./PAGES/8.IoC_2.html">Inversion of Control II</a></li>
-            <li><a href="./PAGES/8.IoC_2.html">Inversion of Control II</a></li>
-            <li><a href="./PAGES/9.DependencyInjection.html">Inyección de Dependencias I</a></li>
-            <li><a href="./PAGES/10.DependencyInjectionII.html">Inyección de Dependencias II</a></li>
-            <li><a href="./PAGES/11.DependencyInjectionIII.html">Inyección de Dependencias III</a></li>
-            <li><a href="./PAGES/12.DependencyInjectionIV.html">Inyección de Dependencias IV</a></li>
-            <li><a href="./PAGES/13.SingletonPrototype.html">Singleton y Prototype</a></li>
-            <li><a href="./PAGES/14.BeanLifeCycle.html">Ciclo de vida de los Beans</a></li>
-        </ul>
+<hr>
+<p>Eliminar el registro con id=2 de la base de datos</p>
+<pre class="language-text">+----+--------+----------+-----------+
+| id | nombre | apellido | direccion |
++----+--------+----------+-----------+
+|  1 | Sandra | Delgado  | Goya #123 |
+|  2 | Paco   | G&#xF3;mez    | Goya #124 |
++----+--------+----------+-----------+
+</pre>
+<h2 class="mume-header" id="clase-eliminaclientejava">Clase <code>EliminaCliente.java</code></h2>
 
-        <h2>Java Annotations</h2>
-        <ul>
-          <li><a href="./PAGES/15.JavaAnnotations.html">Java Annotations I</a></li>
-          <li><a href="./PAGES/16.JavaAnnotationsII.html">Java Annotations II</a></li>
-          <li><a href="./PAGES/17.JavaAnnotationsIII.html">Java Annotations III</a></li>
-          <li><a href="./PAGES/19.JavaAnnotationsIV.html">Java Annotations IV</a></li>
-          <li><a href="./PAGES/20.JavaAnnotationsV.html">Java Annotations V: Qualifier</a></li>
-          <li><a href="./PAGES/21.JavaAnnotationVII.html">Java Annotations: Scope</a></li>
-          <li><a href="./PAGES/22.JavaAnnotationsVIII.html">Java Annotations: @PostConstruct y @PreDestroy</a></li>
-          <li><a href="./PAGES/23.JavaAnnotations.Configuration.html">Java Annotations: @Configuration y @ComponentScan</a></li>
-          <li><a href="./PAGES/24.JavaAnnotationsBean.html">Java Annotations: @Bean</a></li>
-          <li><a href="./PAGES/25.JavaAnnotationsPropertySourceYValue.html">Java Annotations: @PropertySource y @Value</a></li>
-        </ul>
+<pre class="language-text">package com.jarodsmith.conexionHibernate;
 
-        <h2>Aplicaciones Web Dinámicas - MVC</h2>
-        <ul>
-          <li><a href="./PAGES/27.WebApplicationII.html">Aplicación Web dinámica: MVC</a></li>
-          <li><a href="./PAGES/28.WebApplicationIII.html">Aplicación Web dinámica: MVC II: Petición y Respuesta</a></li>
-          <li><a href="./PAGES/29.WebApplicationIV.html">Aplicación Web dinámica: MVC IV: Agregar datos al Modelo</a></li>
-          <li><a href="./PAGES/30.WebApplication.StaticFiles.html">Aplicación Web dinámica: MVC V: Static Files</a></li>
-        </ul>
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
-          <ul>
-            <li><a href="./PAGES/32.Annotation.RequestParam.html">Annotation: @RequestParam</a></li>
-            <li><a href="./PAGES/33.RequestMapping.ConflictoRutas.html">@RequestMapping: Conflicto de Rutas</a></li>
-            <li><a href="./PAGES/34.FormMVCTagsI.html">Form MVC Tags I</a></li>
-            <li><a href="./PAGES/35.FormMVCTagsII.html">Form MVC Tags II</a></li>
-            <li><a href="./PAGES/36.FormMVCTagsIII.html">Form MVC Tags III</a></li>
-            <li><a href="./PAGES/37.FormMVCTagsIV.html">Form MVC Tags IV</a></li>
-          </ul>
+public class EliminaCliente {
 
-        <h2>Validación de Formularios</h2>
-        <ul>
-          <li><a href="./PAGES/38.ValidacionFormulariosI.html">Validación de Formularios I</a></li>
-          <li><a href="./PAGES/39.ValidacionFormulariosII.html">Validación de Formularios II</a></li>
-          <li><a href="./PAGES/40.ValidacionFormulariosIII.html">Validación de Formularios III</a></li>
-          <li><a href="./PAGES/41.ValidacionFormulariosIV.html">Validación de Formularios IV</a></li>
-          <li><a href="./PAGES/42.ValidacionFormularioV.html">Validación de Formularios V</a></li>
-          <li><a href="./PAGES/43.ValidacionFormulariosVI.html">Validación de Formularios VI</a></li>
-          <li><a href="./PAGES/44.ValidacionFormulariosVII.html">Validación de Formularios VII</a></li>
-          <li><a href="./PAGES/45.ValidacionFormulariosVIII.html">Validación de Formularios VIII</a></li>
-        </ul>
+    public static void main(String[] args) {
+    
+        SessionFactory miFactory = new Configuration().configure(&quot;hibernate.cfg.xml&quot;)
+                .addAnnotatedClass(Cliente.class)
+                .addAnnotatedClass(DetallesCliente.class)
+                .buildSessionFactory();
+
+        Session miSesion = miFactory.openSession();
+
+        try {
+
+            miSesion.beginTransaction();
             
+            //DETERMINAR EL CLIENTE A ELIMINAR
+            Cliente cliente = miSesion.get(Cliente.class, 2);
+            
+            //
+            if(cliente != null) {
+                miSesion.delete(cliente);
+                System.out.println(cliente.getNombre() + &quot; &#xA1;Eliminado correctamente!&quot;);
+            }else {
+                System.out.println(&quot;!No se encontr&#xF3; el cliente!&quot;);
+            }
 
-        <h2>Hibernate - Acceso a datos</h2>
-        <ul>
-          <li><a href="./PAGES/46.Hibernate.html">Hibernate</a></li>
-          <li><a href="./PAGES/47.CrearProyectoHibernate.html">Hibernate II</a></li>
-          <li><a href="./PAGES/48.ConfigurarProyectoHibernate.html">Hibernate III</a></li>
-          <li><a href="./PAGES/49.InsercionRegistrosORM.html">Hibernate IV</a></li>
-          <li><a href="./PAGES/50.LeerRegistroORM.html">Hibernate V</a></li>
-          <li><a href="./PAGES/51.ConsultasHQL.html">Hibernate VI - SELECT</a></li>
-          <li><a href="./PAGES/52.UpdateDeleteHQL.html">Hibernate VII UPDATE - DELETE</a></li>
-        </ul>
+            miSesion.getTransaction().commit();
 
-        <h2>Hibernate - Relaciones Entre Tablas</h2>
-        <ul>
-          <li><a href="./PAGES/53.RelacionesEntreTablas.html">Hibernate - Relaciones entre Tablas I</a></li>
-          <li><a href="./PAGES/54.RelacionesEntreTablasII.html">Hibernate - Relaciones entre Tablas II (OneToOne)</a></li>
-          <li><a href="./PAGES/55.RelacionesEntreTablasIII.html">Hibernate - Relaciones entre Tablas III (OneToOne SAVE)</a></li>
-          <li><a href="./PAGES/56.RelacionesEntreTablasIV.html">Hibernate - Relaciones entre Tablas IV (OneToOne DELETE)</a></li>
-        </ul>
-    </main>
-    <footer>
-        
-    </footer>
-
-
+        } finally {
+            miSesion.close();
+            miFactory.close();
+        }
+    }
+}
+</pre>
 </div></body></html>
     </div>
   </body>
