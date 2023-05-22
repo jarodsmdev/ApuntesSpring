@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Apuntes Spring</title>
+    <title>Relaciones entre tablas VII</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
@@ -15,97 +15,52 @@
     </style>
     
   </head>
-  <hr>
   <body for="html-export">
     <div class="mume markdown-preview">
-    <html><head></head><body><div><h1 class="mume-header" id="index">Index</h1>
+    <html><head></head><body><div><h1 class="mume-header" id="relaciones-entre-tablas-vii">Relaciones entre Tablas VII</h1>
 
-      <main>
-        <ul>
-            <li><a href="./PAGES/3.CoreSpring.html">Core Spring</a></li>
-            <li><a href="./PAGES/4.RquisitosSpring.html">Requisitos Spring</a></li>
-            <li><a href="./PAGES/6.InversionOfControl.html">Inversion of Control I</a></li>
-            <li><a href="./PAGES/8.IoC_2.html">Inversion of Control II</a></li>
-            <li><a href="./PAGES/8.IoC_2.html">Inversion of Control II</a></li>
-            <li><a href="./PAGES/9.DependencyInjection.html">Inyección de Dependencias I</a></li>
-            <li><a href="./PAGES/10.DependencyInjectionII.html">Inyección de Dependencias II</a></li>
-            <li><a href="./PAGES/11.DependencyInjectionIII.html">Inyección de Dependencias III</a></li>
-            <li><a href="./PAGES/12.DependencyInjectionIV.html">Inyección de Dependencias IV</a></li>
-            <li><a href="./PAGES/13.SingletonPrototype.html">Singleton y Prototype</a></li>
-            <li><a href="./PAGES/14.BeanLifeCycle.html">Ciclo de vida de los Beans</a></li>
-        </ul>
+<hr>
+<p>Teniendo en la BBDD estos datos:</p>
+<p><code>SELECT * FROM cliente</code></p>
+<pre class="language-text">+----+--------+----------+-----------+
+| id | nombre | apellido | direccion |
++----+--------+----------+-----------+
+|  3 | Paco   | G&#xF3;mez    | Goya #124 |
++----+--------+----------+-----------+
+</pre>
+<p><code>SELECT * FROM detalles_cliente</code></p>
+<pre class="language-text">+----+------------+--------------+-----------------+
+| id | web        | tfno         | comentarios     |
++----+------------+--------------+-----------------+
+|  3 | www.web.cl | 9-321 654 45 | Segundo Cliente |
++----+------------+--------------+-----------------+
+</pre>
+<p>Necesitamos eliminar el registro con id = 3, de la tabla <code>detalles_cliente</code>, sin embargo al hacerlo como hemos visto antes, tambi&#xE9;n se eliminar&#xE1; el registro con el mismo id de la tabla <code>cliente</code> ya que tenemos configurada la eliminaci&#xF3;n en cascada en la clase <code>DetallesCliente.java</code>, en estas l&#xED;neas de c&#xF3;digo</p>
+<pre class="language-text">@OneToOne(mappedBy=&quot;detallesCliente&quot;, cascade = CascadeType.ALL)
+private Cliente cliente;
+</pre>
+<p>Por lo cual debemos eliminar la cascada de las lineas de c&#xF3;digo indicado anteriormente, quedando de la siguiente manera:</p>
+<pre class="language-text">@OneToOne(mappedBy=&quot;detallesCliente&quot;)
+    private Cliente cliente;    
+</pre>
+<p>Sin embargo esto no es suficiente, debemos quitar la relaci&#xF3;n que existe en Spring entre las 2 clases (DetallesCliente y Cliente), y se realiza agregando la siguiente l&#xED;nea de c&#xF3;digo en la instrucci&#xF3;n:</p>
+<pre class="language-text">//QUITAR RELACI&#xD3;N ENTRE DETALLESCLIENTE Y CLIENTE
+detalleDelCliente.getCliente().setDetallesCliente(null);
+</pre>
+<p>Ahora la estructura de la tabla cuenta con la restricci&#xF3;n, la cual impide esta eliminaci&#xF3;n, por lo cual ser&#xED;a necesario quitar esa relaci&#xF3;n para lograr esta eliminaci&#xF3;n.</p>
+<p>Podemos hacerlo con este c&#xF3;digo SQL ejecut&#xE1;ndolo dentro del gestor de BBDD</p>
+<pre class="language-text">ALTER TABLE cliente
+DROP FOREIGN KEY FK_DETALLES;
+</pre>
+<p>Otra opci&#xF3;n es deshabilitar la comprobaci&#xF3;n de integridad referencial a nivel global, hacer los cambios, y luego volver a activarlos</p>
+<pre class="language-text">-- DESACTIVAR COMPROBACI&#xD3;N DE INTEGRIDAD REFERENCIAL
+SET FOREIGN_KEY_CHECKS = 0;
 
-        <h2>Java Annotations</h2>
-        <ul>
-          <li><a href="./PAGES/15.JavaAnnotations.html">Java Annotations I</a></li>
-          <li><a href="./PAGES/16.JavaAnnotationsII.html">Java Annotations II</a></li>
-          <li><a href="./PAGES/17.JavaAnnotationsIII.html">Java Annotations III</a></li>
-          <li><a href="./PAGES/19.JavaAnnotationsIV.html">Java Annotations IV</a></li>
-          <li><a href="./PAGES/20.JavaAnnotationsV.html">Java Annotations V: Qualifier</a></li>
-          <li><a href="./PAGES/21.JavaAnnotationVII.html">Java Annotations: Scope</a></li>
-          <li><a href="./PAGES/22.JavaAnnotationsVIII.html">Java Annotations: @PostConstruct y @PreDestroy</a></li>
-          <li><a href="./PAGES/23.JavaAnnotations.Configuration.html">Java Annotations: @Configuration y @ComponentScan</a></li>
-          <li><a href="./PAGES/24.JavaAnnotationsBean.html">Java Annotations: @Bean</a></li>
-          <li><a href="./PAGES/25.JavaAnnotationsPropertySourceYValue.html">Java Annotations: @PropertySource y @Value</a></li>
-        </ul>
+-- AQU&#xCD; HACER LOS CAMBIOS QUE SE REQUIERAN
 
-        <h2>Aplicaciones Web Dinámicas - MVC</h2>
-        <ul>
-          <li><a href="./PAGES/27.WebApplicationII.html">Aplicación Web dinámica: MVC</a></li>
-          <li><a href="./PAGES/28.WebApplicationIII.html">Aplicación Web dinámica: MVC II: Petición y Respuesta</a></li>
-          <li><a href="./PAGES/29.WebApplicationIV.html">Aplicación Web dinámica: MVC IV: Agregar datos al Modelo</a></li>
-          <li><a href="./PAGES/30.WebApplication.StaticFiles.html">Aplicación Web dinámica: MVC V: Static Files</a></li>
-        </ul>
-
-          <ul>
-            <li><a href="./PAGES/32.Annotation.RequestParam.html">Annotation: @RequestParam</a></li>
-            <li><a href="./PAGES/33.RequestMapping.ConflictoRutas.html">@RequestMapping: Conflicto de Rutas</a></li>
-            <li><a href="./PAGES/34.FormMVCTagsI.html">Form MVC Tags I</a></li>
-            <li><a href="./PAGES/35.FormMVCTagsII.html">Form MVC Tags II</a></li>
-            <li><a href="./PAGES/36.FormMVCTagsIII.html">Form MVC Tags III</a></li>
-            <li><a href="./PAGES/37.FormMVCTagsIV.html">Form MVC Tags IV</a></li>
-          </ul>
-
-        <h2>Validación de Formularios</h2>
-        <ul>
-          <li><a href="./PAGES/38.ValidacionFormulariosI.html">Validación de Formularios I</a></li>
-          <li><a href="./PAGES/39.ValidacionFormulariosII.html">Validación de Formularios II</a></li>
-          <li><a href="./PAGES/40.ValidacionFormulariosIII.html">Validación de Formularios III</a></li>
-          <li><a href="./PAGES/41.ValidacionFormulariosIV.html">Validación de Formularios IV</a></li>
-          <li><a href="./PAGES/42.ValidacionFormularioV.html">Validación de Formularios V</a></li>
-          <li><a href="./PAGES/43.ValidacionFormulariosVI.html">Validación de Formularios VI</a></li>
-          <li><a href="./PAGES/44.ValidacionFormulariosVII.html">Validación de Formularios VII</a></li>
-          <li><a href="./PAGES/45.ValidacionFormulariosVIII.html">Validación de Formularios VIII</a></li>
-        </ul>
-            
-
-        <h2>Hibernate - Acceso a datos</h2>
-        <ul>
-          <li><a href="./PAGES/46.Hibernate.html">Hibernate</a></li>
-          <li><a href="./PAGES/47.CrearProyectoHibernate.html">Hibernate II</a></li>
-          <li><a href="./PAGES/48.ConfigurarProyectoHibernate.html">Hibernate III</a></li>
-          <li><a href="./PAGES/49.InsercionRegistrosORM.html">Hibernate IV</a></li>
-          <li><a href="./PAGES/50.LeerRegistroORM.html">Hibernate V</a></li>
-          <li><a href="./PAGES/51.ConsultasHQL.html">Hibernate VI - SELECT</a></li>
-          <li><a href="./PAGES/52.UpdateDeleteHQL.html">Hibernate VII UPDATE - DELETE</a></li>
-        </ul>
-
-        <h2>Hibernate - Relaciones Entre Tablas</h2>
-        <ul>
-          <li><a href="./PAGES/53.RelacionesEntreTablas.html">Hibernate - Relaciones entre Tablas I</a></li>
-          <li><a href="./PAGES/54.RelacionesEntreTablasII.html">Hibernate - Relaciones entre Tablas II (OneToOne)</a></li>
-          <li><a href="./PAGES/55.RelacionesEntreTablasIII.html">Hibernate - Relaciones entre Tablas III (OneToOne SAVE)</a></li>
-          <li><a href="./PAGES/56.RelacionesEntreTablasIV.html">Hibernate - Relaciones entre Tablas IV (OneToOne DELETE)</a></li>
-          <li><a href="./PAGES/57.RelacionesEntreTablasV.html">Hibernate - Relaciones entre Tablas V (OneToOne Bidireccional READ)</a></li>
-          <li><a href="./PAGES/58.RelacionesEntreTablasVI.html">Hibernate - Relaciones entre Tablas VI (OneToOne Bidireccional DELETE CASCADE)</a></li>
-          <li><a href="./PAGES/59.RelacionesEntreTablasVII.html">Hibernate - Relaciones entre Tablas VII (OneToOne Bidireccional DELETE DEACTIVATE CASCADE)</a></li>
-        </ul>
-    </main>
-    <footer>
-        
-    </footer>
-
-
+-- ACTIVAR COMPROBACI&#xD3;N DE INTEGRIDAD REFERENCIAL
+SET FOREIGN_KEY_CHECKS = 1;
+</pre>
 </div></body></html>
     </div>
   </body>
