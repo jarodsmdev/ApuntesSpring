@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Apuntes Spring</title>
+    <title>FetchType.Lazy y Cierre de Sesión</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
@@ -15,103 +15,96 @@
     </style>
     
   </head>
-  <hr>
   <body for="html-export">
     <div class="mume markdown-preview">
-    <html><head></head><body><div><h1 class="mume-header" id="index">Index</h1>
+    <html><head></head><body><div><h1 class="mume-header" id="fetchtypelazy-y-cierre-de-sesi%C3%B3n" ebook-toc-level-1 heading="FetchType.Lazy y Cierre de Sesi&amp;#xF3;n">FetchType.Lazy y Cierre de Sesi&#xF3;n</h1>
 
-      <main>
-        <ul>
-            <li><a href="./PAGES/3.CoreSpring.html">Core Spring</a></li>
-            <li><a href="./PAGES/4.RquisitosSpring.html">Requisitos Spring</a></li>
-            <li><a href="./PAGES/6.InversionOfControl.html">Inversion of Control I</a></li>
-            <li><a href="./PAGES/8.IoC_2.html">Inversion of Control II</a></li>
-            <li><a href="./PAGES/8.IoC_2.html">Inversion of Control II</a></li>
-            <li><a href="./PAGES/9.DependencyInjection.html">Inyección de Dependencias I</a></li>
-            <li><a href="./PAGES/10.DependencyInjectionII.html">Inyección de Dependencias II</a></li>
-            <li><a href="./PAGES/11.DependencyInjectionIII.html">Inyección de Dependencias III</a></li>
-            <li><a href="./PAGES/12.DependencyInjectionIV.html">Inyección de Dependencias IV</a></li>
-            <li><a href="./PAGES/13.SingletonPrototype.html">Singleton y Prototype</a></li>
-            <li><a href="./PAGES/14.BeanLifeCycle.html">Ciclo de vida de los Beans</a></li>
-        </ul>
+<hr>
+<p>Utilizar FetchType.LAZY en combinaci&#xF3;n con el cierre de sesi&#xF3;n puede causar problemas si no se maneja adecuadamente.</p>
+<p>Cuando se utiliza FetchType.LAZY, las relaciones no se cargan de inmediato desde la base de datos, sino que se cargan de forma diferida cuando se accede a ellas por primera vez. Esto significa que la carga de las relaciones se realiza dentro del contexto de la sesi&#xF3;n de persistencia.</p>
+<p>El problema surge cuando se cierra la sesi&#xF3;n de persistencia antes de acceder a las relaciones lazy. Si intentas acceder a una relaci&#xF3;n lazy despu&#xE9;s de cerrar la sesi&#xF3;n, se producir&#xE1; una excepci&#xF3;n, t&#xED;picamente una LazyInitializationException.</p>
+<p>Para evitar este problema, es importante asegurarse de que la sesi&#xF3;n de persistencia est&#xE9; abierta mientras se accede a las relaciones lazy. Esto se puede lograr utilizando transacciones y asegur&#xE1;ndose de que la sesi&#xF3;n est&#xE9; abierta durante toda la duraci&#xF3;n de la operaci&#xF3;n que requiere el acceso a las relaciones lazy.</p>
+<p>En resumen, al utilizar FetchType.LAZY, debes tener cuidado de manejar adecuadamente el ciclo de vida de la sesi&#xF3;n y evitar acceder a relaciones lazy despu&#xE9;s de cerrar la sesi&#xF3;n para evitar excepciones de inicializaci&#xF3;n diferida.</p>
+<h2 class="mume-header" id="posible-soluci%C3%B3n" ebook-toc-level-2 heading="Posible soluci&amp;#xF3;n">Posible soluci&#xF3;n</h2>
 
-        <h2>Java Annotations</h2>
-        <ul>
-          <li><a href="./PAGES/15.JavaAnnotations.html">Java Annotations I</a></li>
-          <li><a href="./PAGES/16.JavaAnnotationsII.html">Java Annotations II</a></li>
-          <li><a href="./PAGES/17.JavaAnnotationsIII.html">Java Annotations III</a></li>
-          <li><a href="./PAGES/19.JavaAnnotationsIV.html">Java Annotations IV</a></li>
-          <li><a href="./PAGES/20.JavaAnnotationsV.html">Java Annotations V: Qualifier</a></li>
-          <li><a href="./PAGES/21.JavaAnnotationVII.html">Java Annotations: Scope</a></li>
-          <li><a href="./PAGES/22.JavaAnnotationsVIII.html">Java Annotations: @PostConstruct y @PreDestroy</a></li>
-          <li><a href="./PAGES/23.JavaAnnotations.Configuration.html">Java Annotations: @Configuration y @ComponentScan</a></li>
-          <li><a href="./PAGES/24.JavaAnnotationsBean.html">Java Annotations: @Bean</a></li>
-          <li><a href="./PAGES/25.JavaAnnotationsPropertySourceYValue.html">Java Annotations: @PropertySource y @Value</a></li>
-        </ul>
+<p>Una posible soluci&#xF3;n ser&#xED;a el siguiente c&#xF3;digo para realizar una consulta HQL con la cl&#xE1;usula JOIN FETCH y cargar anticipadamente los datos de los pedidos se conoce como &quot;Eager Fetching&quot; o &quot;Join Fetching&quot;.</p>
+<p>El Eager Fetching es una t&#xE9;cnica que se utiliza para cargar de forma anticipada las relaciones entre entidades en una consulta, evitando as&#xED; las excepciones de inicializaci&#xF3;n diferida y mejorando el rendimiento al reducir la cantidad de consultas a la base de datos.</p>
+<p>En este caso, la cl&#xE1;usula JOIN FETCH en la consulta HQL indica a Hibernate que cargue las entidades relacionadas de forma anticipada en una sola consulta, en lugar de realizar consultas adicionales para cargar los datos de las relaciones de forma lazy.</p>
+<p>El uso de Eager Fetching con JOIN FETCH es una estrategia v&#xE1;lida para resolver el problema de lazy loading en combinaci&#xF3;n con el cierre de sesi&#xF3;n, ya que permite cargar los datos requeridos de forma anticipada, evitando as&#xED; las excepciones posteriores al cierre de sesi&#xF3;n.</p>
+<h2 class="mume-header" id="clase-obtenerpedidosclientelazyjava" ebook-toc-level-2 heading="Clase &lt;code&gt;ObtenerPedidosClienteLAZY.java&lt;/code&gt;">Clase <code>ObtenerPedidosClienteLAZY.java</code></h2>
 
-        <h2>Aplicaciones Web Dinámicas - MVC</h2>
-        <ul>
-          <li><a href="./PAGES/27.WebApplicationII.html">Aplicación Web dinámica: MVC</a></li>
-          <li><a href="./PAGES/28.WebApplicationIII.html">Aplicación Web dinámica: MVC II: Petición y Respuesta</a></li>
-          <li><a href="./PAGES/29.WebApplicationIV.html">Aplicación Web dinámica: MVC IV: Agregar datos al Modelo</a></li>
-          <li><a href="./PAGES/30.WebApplication.StaticFiles.html">Aplicación Web dinámica: MVC V: Static Files</a></li>
-        </ul>
+<pre class="language-text">package com.jarodsmith.conexionHibernate;
 
-          <ul>
-            <li><a href="./PAGES/32.Annotation.RequestParam.html">Annotation: @RequestParam</a></li>
-            <li><a href="./PAGES/33.RequestMapping.ConflictoRutas.html">@RequestMapping: Conflicto de Rutas</a></li>
-            <li><a href="./PAGES/34.FormMVCTagsI.html">Form MVC Tags I</a></li>
-            <li><a href="./PAGES/35.FormMVCTagsII.html">Form MVC Tags II</a></li>
-            <li><a href="./PAGES/36.FormMVCTagsIII.html">Form MVC Tags III</a></li>
-            <li><a href="./PAGES/37.FormMVCTagsIV.html">Form MVC Tags IV</a></li>
-          </ul>
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
-        <h2>Validación de Formularios</h2>
-        <ul>
-          <li><a href="./PAGES/38.ValidacionFormulariosI.html">Validación de Formularios I</a></li>
-          <li><a href="./PAGES/39.ValidacionFormulariosII.html">Validación de Formularios II</a></li>
-          <li><a href="./PAGES/40.ValidacionFormulariosIII.html">Validación de Formularios III</a></li>
-          <li><a href="./PAGES/41.ValidacionFormulariosIV.html">Validación de Formularios IV</a></li>
-          <li><a href="./PAGES/42.ValidacionFormularioV.html">Validación de Formularios V</a></li>
-          <li><a href="./PAGES/43.ValidacionFormulariosVI.html">Validación de Formularios VI</a></li>
-          <li><a href="./PAGES/44.ValidacionFormulariosVII.html">Validación de Formularios VII</a></li>
-          <li><a href="./PAGES/45.ValidacionFormulariosVIII.html">Validación de Formularios VIII</a></li>
-        </ul>
-            
+public class ObtenerPedidosClienteLAZY {
 
-        <h2>Hibernate - Acceso a datos</h2>
-        <ul>
-          <li><a href="./PAGES/46.Hibernate.html">Hibernate</a></li>
-          <li><a href="./PAGES/47.CrearProyectoHibernate.html">Hibernate II</a></li>
-          <li><a href="./PAGES/48.ConfigurarProyectoHibernate.html">Hibernate III</a></li>
-          <li><a href="./PAGES/49.InsercionRegistrosORM.html">Hibernate IV</a></li>
-          <li><a href="./PAGES/50.LeerRegistroORM.html">Hibernate V</a></li>
-          <li><a href="./PAGES/51.ConsultasHQL.html">Hibernate VI - SELECT</a></li>
-          <li><a href="./PAGES/52.UpdateDeleteHQL.html">Hibernate VII UPDATE - DELETE</a></li>
-        </ul>
-
-        <h2>Hibernate - Relaciones Entre Tablas</h2>
-        <ul>
-          <li><a href="./PAGES/53.RelacionesEntreTablas.html">Relaciones entre Tablas I</a></li>
-          <li><a href="./PAGES/54.RelacionesEntreTablasII.html">Relaciones entre Tablas II (OneToOne)</a></li>
-          <li><a href="./PAGES/55.RelacionesEntreTablasIII.html">Relaciones entre Tablas III (OneToOne SAVE)</a></li>
-          <li><a href="./PAGES/56.RelacionesEntreTablasIV.html">Relaciones entre Tablas IV (OneToOne DELETE)</a></li>
-          <li><a href="./PAGES/57.RelacionesEntreTablasV.html">Relaciones entre Tablas V (OneToOne Bidireccional READ)</a></li>
-          <li><a href="./PAGES/58.RelacionesEntreTablasVI.html">Relaciones entre Tablas VI (OneToOne Bidireccional DELETE CASCADE)</a></li>
-          <li><a href="./PAGES/59.RelacionesEntreTablasVII.html">Relaciones entre Tablas VII (OneToOne Bidireccional DELETE DEACTIVATE CASCADE)</a></li>
-          <li><a href="./PAGES/60.RelacionesEntreTablasVIII.html">Relaciones entre Tablas VIII (ManyToOne Bidireccional)</a></li>
-          <li><a href="./PAGES/61.RelacionesEntreTablasIX.html">Relaciones entre Tablas IX (ManyToOne Bidireccional OneToMany)</a></li>
-          <li><a href="./PAGES/62.RelacionesEntreTablasX.html">Relaciones entre Tablas X (ManyToOne Bidireccional CREATE)</a></li>
-          <li><a href="./PAGES/63.RelacionesEntreTablasXI.html">Relaciones entre Tablas XI (OneToMany Bidireccional READ)</a></li>
-          <li><a href="./PAGES/64.FetchTypeEagerFetchTypeLazy.html">Tipo de carga de datos FetchType Eager vs Fetchtype Lazy</a></li>
-          <li><a href="./PAGES/65.LazyYCierreSesion.html">Problemas con FetchType Lazy y Cierre de Sesión</a></li>
-        </ul>
-    </main>
-    <footer>
+    public static void main(String[] args) {
         
-    </footer>
+        SessionFactory miFactory = new Configuration().configure(&quot;hibernate.cfg.xml&quot;)
+                                    .addAnnotatedClass(Cliente.class)
+                                    .addAnnotatedClass(DetallesCliente.class)
+                                    .addAnnotatedClass(Pedido.class)
+                                    .buildSessionFactory();
+        
+        Session miSesion = miFactory.openSession();
+        
+        try {
+            
+            miSesion.beginTransaction();
+            
+            //OBTENER EL CLIENTE DE LA TABLA CLIENTE CON ID 2
+            Query&lt;Cliente&gt; consulta = miSesion.createQuery(&quot;SELECT clte FROM Cliente clte JOIN FETCH clte.pedidos WHERE clte.id=:elClienteId&quot;, Cliente.class);
+            
+            consulta.setParameter(&quot;elClienteId&quot;, 2);
+            
+            Cliente cliente = consulta.getSingleResult();
+            
+            System.out.println(&quot;Cliente: &quot; + cliente);
+            
+            miSesion.getTransaction().commit();
+            
+            miSesion.close();
+            
+            //MOSTRAR CADA PEDIDO
+            for(Pedido pedido: cliente.getPedidos()) {
+                System.out.println(pedido);
+            }
+            
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally {
+            
+            miFactory.close();
+        }
 
+    }
 
+}
+</pre>
+<h2 class="mume-header" id="explicaci%C3%B3n-de-la-query-hql-reci%C3%A9n-indicada" ebook-toc-level-2 heading="Explicaci&amp;#xF3;n de la Query HQL reci&amp;#xE9;n indicada">Explicaci&#xF3;n de la Query HQL reci&#xE9;n indicada</h2>
+
+<pre class="language-text">SELECT clte FROM Cliente clte JOIN FETCH clte.pedidos WHERE clte.id=:elClienteId
+</pre>
+<p>Esta consulta tiene la intenci&#xF3;n de obtener un objeto <code>Cliente</code> con sus pedidos asociados utilizando la carga anticipada (eager fetch) a trav&#xE9;s de la cl&#xE1;usula <code>JOIN FETCH</code>. Veamos una explicaci&#xF3;n detallada de cada parte de la consulta:</p>
+<ul>
+<li>
+<p><code>SELECT clte</code>: Indica que queremos seleccionar el objeto <code>Cliente</code> en la consulta. <code>clte</code> es un alias utilizado para referirse al objeto <code>Cliente</code>.</p>
+</li>
+<li>
+<p><code>FROM Cliente clte</code>: Especifica que estamos seleccionando desde la entidad <code>Cliente</code> y establece el alias <code>clte</code> para hacer referencia al objeto <code>Cliente</code> en la consulta.</p>
+</li>
+<li>
+<p><code>JOIN FETCH clte.pedidos</code>: Realiza una operaci&#xF3;n de JOIN FETCH en la relaci&#xF3;n <code>pedidos</code> del objeto <code>Cliente</code>. Esto significa que se realizar&#xE1; una consulta JOIN para recuperar los pedidos asociados al cliente de forma anticipada, evitando la carga diferida (lazy loading). Utilizar <code>JOIN FETCH</code> en lugar de s&#xF3;lo <code>JOIN</code> asegura que los pedidos se carguen de inmediato y est&#xE9;n disponibles en el objeto <code>Cliente</code> obtenido.</p>
+</li>
+<li>
+<p><code>WHERE clte.id=:elClienteId</code>: Establece una condici&#xF3;n de filtrado en la consulta. Aqu&#xED;, <code>clte.id</code> se refiere al atributo <code>id</code> del objeto <code>Cliente</code>. <code>:elClienteId</code> es un par&#xE1;metro de la consulta que espera ser proporcionado con un valor. Esto permite filtrar los resultados seg&#xFA;n el ID del cliente que se pasa como par&#xE1;metro.</p>
+</li>
+</ul>
+<p>En resumen, esta consulta HQL selecciona el objeto <code>Cliente</code> y realiza una carga anticipada de sus pedidos asociados utilizando <code>JOIN FETCH</code>. Luego, se filtra el resultado para obtener el cliente con un ID espec&#xED;fico.</p>
 </div></body></html>
     </div>
   </body>
