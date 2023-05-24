@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Apuntes Spring</title>
+    <title>Web Dinámicas CRUD III</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
@@ -15,110 +15,79 @@
     </style>
     
   </head>
-  <hr>
   <body for="html-export">
     <div class="mume markdown-preview">
-    <html><head></head><body><div><h1 class="mume-header" id="index">Index</h1>
+    <html><head></head><body><div><h1 class="mume-header" id="web-din%C3%A1mica---crud-iii">Web Din&#xE1;mica - CRUD III</h1>
 
-      <main>
-        <ul>
-            <li><a href="./PAGES/3.CoreSpring.html">Core Spring</a></li>
-            <li><a href="./PAGES/4.RquisitosSpring.html">Requisitos Spring</a></li>
-            <li><a href="./PAGES/6.InversionOfControl.html">Inversion of Control I</a></li>
-            <li><a href="./PAGES/8.IoC_2.html">Inversion of Control II</a></li>
-            <li><a href="./PAGES/8.IoC_2.html">Inversion of Control II</a></li>
-            <li><a href="./PAGES/9.DependencyInjection.html">Inyección de Dependencias I</a></li>
-            <li><a href="./PAGES/10.DependencyInjectionII.html">Inyección de Dependencias II</a></li>
-            <li><a href="./PAGES/11.DependencyInjectionIII.html">Inyección de Dependencias III</a></li>
-            <li><a href="./PAGES/12.DependencyInjectionIV.html">Inyección de Dependencias IV</a></li>
-            <li><a href="./PAGES/13.SingletonPrototype.html">Singleton y Prototype</a></li>
-            <li><a href="./PAGES/14.BeanLifeCycle.html">Ciclo de vida de los Beans</a></li>
-        </ul>
+<hr>
+<p>Vamos a realizar la lectura de datos, para eso debemos configurar creando una clase para que pueda representar la entidad Cliente</p>
+<h2 class="mume-header" id="clase-clientejava">Clase Cliente.java</h2>
 
-        <h2>Java Annotations</h2>
-        <ul>
-          <li><a href="./PAGES/15.JavaAnnotations.html">Java Annotations I</a></li>
-          <li><a href="./PAGES/16.JavaAnnotationsII.html">Java Annotations II</a></li>
-          <li><a href="./PAGES/17.JavaAnnotationsIII.html">Java Annotations III</a></li>
-          <li><a href="./PAGES/19.JavaAnnotationsIV.html">Java Annotations IV</a></li>
-          <li><a href="./PAGES/20.JavaAnnotationsV.html">Java Annotations V: Qualifier</a></li>
-          <li><a href="./PAGES/21.JavaAnnotationVII.html">Java Annotations: Scope</a></li>
-          <li><a href="./PAGES/22.JavaAnnotationsVIII.html">Java Annotations: @PostConstruct y @PreDestroy</a></li>
-          <li><a href="./PAGES/23.JavaAnnotations.Configuration.html">Java Annotations: @Configuration y @ComponentScan</a></li>
-          <li><a href="./PAGES/24.JavaAnnotationsBean.html">Java Annotations: @Bean</a></li>
-          <li><a href="./PAGES/25.JavaAnnotationsPropertySourceYValue.html">Java Annotations: @PropertySource y @Value</a></li>
-        </ul>
+<pre class="language-text">package com.jarod.controlador.entity;
 
-        <h2>Aplicaciones Web Dinámicas - MVC</h2>
-        <ul>
-          <li><a href="./PAGES/27.WebApplicationII.html">Aplicación Web dinámica: MVC</a></li>
-          <li><a href="./PAGES/28.WebApplicationIII.html">Aplicación Web dinámica: MVC II: Petición y Respuesta</a></li>
-          <li><a href="./PAGES/29.WebApplicationIV.html">Aplicación Web dinámica: MVC IV: Agregar datos al Modelo</a></li>
-          <li><a href="./PAGES/30.WebApplication.StaticFiles.html">Aplicación Web dinámica: MVC V: Static Files</a></li>
-        </ul>
-
-          <ul>
-            <li><a href="./PAGES/32.Annotation.RequestParam.html">Annotation: @RequestParam</a></li>
-            <li><a href="./PAGES/33.RequestMapping.ConflictoRutas.html">@RequestMapping: Conflicto de Rutas</a></li>
-            <li><a href="./PAGES/34.FormMVCTagsI.html">Form MVC Tags I</a></li>
-            <li><a href="./PAGES/35.FormMVCTagsII.html">Form MVC Tags II</a></li>
-            <li><a href="./PAGES/36.FormMVCTagsIII.html">Form MVC Tags III</a></li>
-            <li><a href="./PAGES/37.FormMVCTagsIV.html">Form MVC Tags IV</a></li>
-          </ul>
-
-        <h2>Validación de Formularios</h2>
-        <ul>
-          <li><a href="./PAGES/38.ValidacionFormulariosI.html">Validación de Formularios I</a></li>
-          <li><a href="./PAGES/39.ValidacionFormulariosII.html">Validación de Formularios II</a></li>
-          <li><a href="./PAGES/40.ValidacionFormulariosIII.html">Validación de Formularios III</a></li>
-          <li><a href="./PAGES/41.ValidacionFormulariosIV.html">Validación de Formularios IV</a></li>
-          <li><a href="./PAGES/42.ValidacionFormularioV.html">Validación de Formularios V</a></li>
-          <li><a href="./PAGES/43.ValidacionFormulariosVI.html">Validación de Formularios VI</a></li>
-          <li><a href="./PAGES/44.ValidacionFormulariosVII.html">Validación de Formularios VII</a></li>
-          <li><a href="./PAGES/45.ValidacionFormulariosVIII.html">Validación de Formularios VIII</a></li>
-        </ul>
-            
-
-        <h2>Hibernate - Acceso a datos</h2>
-        <ul>
-          <li><a href="./PAGES/46.Hibernate.html">Hibernate</a></li>
-          <li><a href="./PAGES/47.CrearProyectoHibernate.html">Hibernate II</a></li>
-          <li><a href="./PAGES/48.ConfigurarProyectoHibernate.html">Hibernate III</a></li>
-          <li><a href="./PAGES/49.InsercionRegistrosORM.html">Hibernate IV</a></li>
-          <li><a href="./PAGES/50.LeerRegistroORM.html">Hibernate V</a></li>
-          <li><a href="./PAGES/51.ConsultasHQL.html">Hibernate VI - SELECT</a></li>
-          <li><a href="./PAGES/52.UpdateDeleteHQL.html">Hibernate VII UPDATE - DELETE</a></li>
-        </ul>
-
-        <h2>Hibernate - Relaciones Entre Tablas</h2>
-        <ul>
-          <li><a href="./PAGES/53.RelacionesEntreTablas.html">Relaciones entre Tablas I</a></li>
-          <li><a href="./PAGES/54.RelacionesEntreTablasII.html">Relaciones entre Tablas II (OneToOne)</a></li>
-          <li><a href="./PAGES/55.RelacionesEntreTablasIII.html">Relaciones entre Tablas III (OneToOne SAVE)</a></li>
-          <li><a href="./PAGES/56.RelacionesEntreTablasIV.html">Relaciones entre Tablas IV (OneToOne DELETE)</a></li>
-          <li><a href="./PAGES/57.RelacionesEntreTablasV.html">Relaciones entre Tablas V (OneToOne Bidireccional READ)</a></li>
-          <li><a href="./PAGES/58.RelacionesEntreTablasVI.html">Relaciones entre Tablas VI (OneToOne Bidireccional DELETE CASCADE)</a></li>
-          <li><a href="./PAGES/59.RelacionesEntreTablasVII.html">Relaciones entre Tablas VII (OneToOne Bidireccional DELETE DEACTIVATE CASCADE)</a></li>
-          <li><a href="./PAGES/60.RelacionesEntreTablasVIII.html">Relaciones entre Tablas VIII (ManyToOne Bidireccional)</a></li>
-          <li><a href="./PAGES/61.RelacionesEntreTablasIX.html">Relaciones entre Tablas IX (ManyToOne Bidireccional OneToMany)</a></li>
-          <li><a href="./PAGES/62.RelacionesEntreTablasX.html">Relaciones entre Tablas X (ManyToOne Bidireccional CREATE)</a></li>
-          <li><a href="./PAGES/63.RelacionesEntreTablasXI.html">Relaciones entre Tablas XI (OneToMany Bidireccional READ)</a></li>
-          <li><a href="./PAGES/64.FetchTypeEagerFetchTypeLazy.html">Tipo de carga de datos FetchType Eager vs Fetchtype Lazy</a></li>
-          <li><a href="./PAGES/65.LazyYCierreSesion.html">Problemas con FetchType Lazy y Cierre de Sesión</a></li>
-        </ul>
-
-        <h2>Proyecto Web Dinámico</h2>
-        <ul>
-          <li><a href="./PAGES/66.WebDinamicaCRUDI.html">CRUD I</a></li>
-          <li><a href="./PAGES/67.WebDinamicaCRUDII.html">CRUD II</a></li>
-          <li><a href="./PAGES/68.WebDinamicoCRUDIII.html">CRUD III</a></li>
-        </ul>
-    </main>
-    <footer>
-        
-    </footer>
+import javax.persistence.*;
 
 
+@Entity
+@Table(name=&quot;cliente&quot;)
+public class Cliente {	
+
+    public Cliente() {
+    }
+    
+    @Override
+    public String toString() {
+        return &quot;Cliente [id=&quot; + id + &quot;, nombre=&quot; + nombre + &quot;, apellido=&quot; + apellido + &quot;, email=&quot; + email + &quot;]&quot;;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name=&quot;id&quot;)
+    private int id;
+    
+    @Column(name=&quot;nombre&quot;)
+    private String nombre;
+    
+    @Column(name=&quot;apellido&quot;)
+    private String apellido;
+    
+    @Column(name=&quot;email&quot;)
+    private String email;
+}
+</pre>
 </div></body></html>
     </div>
   </body>
