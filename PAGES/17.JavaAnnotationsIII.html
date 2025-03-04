@@ -798,13 +798,13 @@
     <html>
 
     <head>
-        
+        <header>
+            <nav>
+                <a href="../index.html">Volver</a>
+            </nav>
+        </header>
     </head>
-    <header>
-        <nav>
-            <a href="../index.html">Volver</a>
-        </nav>
-    </header>
+
 <body></body>
 
 </html>
@@ -820,7 +820,10 @@
             <div>
                 <h1 id="java-annotations-iii-autowired">Java Annotations III. Autowired </h1>
                 <hr>
-                <p>Java annotations <code>Autowired</code>, inyección de dependencias utilizando un constructor</p>
+                <h2 id="inyección-de-dependencias-autowired">Inyección de Dependencias: @Autowired </h2>
+                <p>La anotación <code>@Autowired</code> se utiliza para inyectar dependencias en los beans de Spring. Se
+                    puede aplicar a campos, métodos setter, métodos genéricos y constructores.</p>
+                <h2 id="inyección-de-dependencias-usando-constructor">Inyección de Dependencias usando Constructor </h2>
                 <p>Para utilizar esto deberemos seguir 3 pasos:</p>
                 <p>1.- Crear clase + interfaz a inyectar (dependencia)<br>
                     2.- Crear un constructor para inyección en la clase que lo solicite<br>
@@ -890,7 +893,7 @@ public class ComercialExperimentado implements IEmpleados {
     //CREACIÓN DE ATRIBUTO DE TIPO ICreacionInformeFinanciero
     private ICreacionInformeFinanciero nuevoInforme;
 
-    //CREACIÓN DE CONSTRUCTOR
+    //CREACIÓN DE CONSTRUCTOR: USO DE @AUTOWIRED
     @Autowired
     public ComercialExperimentado(ICreacionInformeFinanciero nuevoInforme) {
         this.nuevoInforme = nuevoInforme;
